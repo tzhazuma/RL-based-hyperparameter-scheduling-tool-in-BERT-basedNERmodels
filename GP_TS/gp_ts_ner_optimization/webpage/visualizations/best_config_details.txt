@@ -1,0 +1,8 @@
+Best Configuration (Trial 3, F1: 0.6275)
+--------------------------------------------------
+learning_rate: 1.2299372681604002e-05
+weight_decay: 2.7598230915285763e-05
+adam_beta1: 0.9119604799364227
+adam_beta2: 0.9896620923772135
+warmup_steps: 53
+train_batch: 32
