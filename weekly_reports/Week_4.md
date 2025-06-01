@@ -31,7 +31,8 @@
 - **Observation:** TD3 quickly converges post-exploration and maintains stable F1 around 0.55–0.60
 - Training curve shows dense learning after transition from random trials.
 
-![1748807512105](image/Week_4/1748807512105.png)
+![f8c72781ed4e238e61c5fb1bedaf651](https://github.com/user-attachments/assets/642e09f9-0de5-4e88-a659-a399138eede8)
+
 
 ---
 
@@ -40,7 +41,8 @@
 - **Best F1:** **0.5399** at **Trial 227**
 - **Observation:** F1 gradually improves after random trials, reaching stable region only after ~200 trials.
 
-![1748807524758](image/Week_4/1748807524758.png)
+![5b6296109523862613f7e55a3214042](https://github.com/user-attachments/assets/b18b7d16-820c-4122-b6e2-dd3267fa7366)
+
 
 ---
 
