@@ -36,7 +36,7 @@
 
 ---
 
-### 📊 Results: `wikigold-distant`
+### Results: `wikigold-distant`
 
 - **Best F1:** **0.5399** at **Trial 227**
 - **Observation:** F1 gradually improves after random trials, reaching stable region only after ~200 trials.
