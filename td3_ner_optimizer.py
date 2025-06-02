@@ -31,7 +31,7 @@ def convert_tuples_in_list_to_lists(data_list):
     if not isinstance(data_list, list):
         raise TypeError("输入必须是一个列表 (Input must be a list).")
 
-    return [_recursive_tuple_converter(element) for element in data_list]
+    return tuple([torch.Tensor(_recursive_tuple_converter(element) ) for element in data_list])
 
 def _recursive_tuple_converter(item):
     """
@@ -49,7 +49,7 @@ def _recursive_tuple_converter(item):
         return {key: _recursive_tuple_converter(value) for key, value in item.items()}
     else:
         # 基本情况：元素不是元组、列表或字典，直接返回
-        return item
+        return [item]
 # Actor 网络
 class TD3Actor(nn.Module):
     def __init__(self, s_dim, a_dim, h=64):
@@ -121,6 +121,9 @@ class ReplayBuffer:
         # 确保 s 和 a 是张量
         #
         r= convert_tuples_in_list_to_lists(r)
+        #s=torch.tensor(s, dtype=torch.float32)
+        #a=torch.tensor(a, dtype=torch.float32)
+        #r=torch.tensor(r, dtype=torch.float32)
         try:
             torch.stack(s)
         except:
