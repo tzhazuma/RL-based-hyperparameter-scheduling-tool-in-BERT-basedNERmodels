@@ -64,7 +64,7 @@ class TRPOOptimizer:
                  n_trials: int=20, random_trials: int=5, seed: int=42,
                  data_dir: str=None, model_type: str="roberta", model_name: str="roberta-base",
                  n_epochs: int=5, max_seq_length: int=128, cache_dir: str=None,
-                 run_ner_path: str=None, skip_model_saving: bool=False,
+                 run_ner_path: str=None, skip_model_saving: bool=True,
                  trpo_iters: int=10, max_kl: float=0.01, cg_iters: int=10,
                  damping: float=0.1, verbose: bool=True):
         self.hyperparameter_space = hyperparameter_space

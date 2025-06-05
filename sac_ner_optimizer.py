@@ -81,7 +81,7 @@ class SACOptimizer:
         max_seq_length: int = 128,
         cache_dir: str = None,
         run_ner_path: str = None,
-        skip_model_saving: bool = False,
+        skip_model_saving: bool = True,
         # SAC 超参
         gamma: float = 0.99,
         tau: float = 0.005,

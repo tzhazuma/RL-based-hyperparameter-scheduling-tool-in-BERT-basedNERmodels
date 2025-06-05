@@ -2,7 +2,7 @@
 
 echo "检查并安装依赖..."
 export PYTHONWARNINGS="ignore"
-pip install "modelscope>=1.9.2" --quiet
+#pip install "modelscope>=1.9.2" --quiet
 
 RUN_NER_PATH="../BOND/run_ner.py"
 TRPO_SCRIPT="./trpo_ner_optimizer.py"
@@ -16,19 +16,19 @@ if [ ! -f "$TRPO_SCRIPT" ]; then
   exit 1
 fi
 
-DATA_DIR="../BOND/dataset/webpage_distant"
-if [ ! -d "$DATA_DIR" ]; then
-  DATA_DIR="$(dirname "$RUN_NER_PATH")/dataset/webpage_distant"
-  echo "尝试使用推断的数据目录: $DATA_DIR"
-fi
+DATA_DIR="../BOND/dataset/twitter_distant"
+#if [ ! -d "$DATA_DIR" ]; then
+  #DATA_DIR="$(dirname "$RUN_NER_PATH")/dataset/webpage_distant"
+  #echo "尝试使用推断的数据目录: $DATA_DIR"
+#fi
 
 CACHE_DIR="../BOND/pretrained_model"
 mkdir -p "$CACHE_DIR"
 
-OUTPUT_DIR="./outputs/trpo_ner_optimization"
-N_TRIALS=50
+OUTPUT_DIR="./outputs/trpo_ner_optimization_twitter"
+N_TRIALS=100
 RANDOM_TRIALS=10
-N_EPOCHS=10
+N_EPOCHS=20
 MAX_SEQ_LENGTH=128
 SEED=42
 

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 export PYTHONWARNINGS="ignore"
-pip install "modelscope>=1.9.2" --quiet
+#pip install "modelscope>=1.9.2" --quiet
 
 RUN_NER="../BOND/run_ner.py"
 SAC_PY="./sac_ner_optimizer.py"
-DATA_DIR="../BOND/dataset/webpage_distant"
+DATA_DIR="../BOND/dataset/twitter_distant"
 CACHE_DIR="../BOND/pretrained_model"
-OUT="./outputs/sac_ner_optimization"
+OUT="./outputs/sac_ner_optimization_twitter"
 mkdir -p $OUT $CACHE_DIR
 
 python $SAC_PY \
@@ -15,9 +15,9 @@ python $SAC_PY \
   --output_dir "$OUT" \
   --model_type "roberta" \
   --model_name "roberta-base" \
-  --n_trials 50 \
+  --n_trials 100 \
   --seed 42 \
-  --n_epochs 1 \
+  --n_epochs 20 \
   --max_seq_length 128 \
   --cache_dir "$CACHE_DIR" \
   --run_ner_path "$RUN_NER" \
@@ -29,6 +29,6 @@ python $SAC_PY \
   --alpha_lr 3e-4 \
   --init_alpha 0.2 \
   --buffer_size 1000 \
-  --batch_size 16 \
+  --batch_size 64 \
   --update_after 10 \
   --update_every 5
