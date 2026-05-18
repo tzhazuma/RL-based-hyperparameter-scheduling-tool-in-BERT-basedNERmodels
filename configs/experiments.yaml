@@ -1,0 +1,221 @@
+# =============================================================================
+# Experiment Orchestration Configuration
+# =============================================================================
+# Defines the full Cartesian product experiment grid, per-scheduler settings,
+# dataset paths, and execution parameters for the unified experiment runner.
+#
+# The runner generates all combinations of:
+#   datasets x models x schedulers x seeds
+# and executes each via subprocess, with checkpointing and result aggregation.
+# =============================================================================
+
+# ----- Top-level grid dimensions ---------------------------------------------
+datasets:
+  - webpage
+  - wikigold
+  - conll03
+  - ontonotes5
+  - twitter
+
+models:
+  - bert-base-cased
+  - roberta-base
+
+schedulers:
+  - static
+  - step_decay
+  - cosine
+  - plateau
+  - gp_ts
+  - ppo
+  - dqn
+  - td3
+  - sac
+  - trpo
+  - grpo
+
+seeds:
+  - 42
+  - 123
+  - 456
+
+# ----- Repository paths (relative to repo root) ------------------------------
+repo_root: "."
+results_dir: "results"
+bond_dir: "BOND"
+gp_ts_dir: "GP_TS"
+
+# Determine model_type from model_name
+model_type_map:
+  bert-base-cased: "bert"
+  roberta-base: "roberta"
+
+# Dataset directory mapping (appended to bond_dir/dataset/)
+dataset_dirs:
+  webpage: "webpage_distant"
+  wikigold: "Wikigold_distant"
+  conll03: "conll03_distant"
+  ontonotes5: "OntoNote_distant"
+  twitter: "twitter_distant"
+
+# ----- Execution parameters --------------------------------------------------
+timeout_seconds: 14400       # 4 hours per experiment
+n_epochs: 10                 # default training epochs
+max_seq_length: 128
+cache_dir_rel: "BOND/pretrained_model"
+run_ner_path_rel: "BOND/run_ner.py"
+
+# ----- Per-scheduler command configuration -----------------------------------
+# Each scheduler has:
+#   script:        Path to optimizer/trainer script (relative to repo_root)
+#   args:          Dictionary of CLI arguments (keys without --, auto-prefixed)
+#   is_static:     If true, uses BOND/run_ner.py directly (static scheduler family)
+#   skip_model:    Whether to add --skip_model_saving (for optimizer scripts)
+scheduler_configs:
+  # -- Static scheduler family (use BOND/run_ner.py directly) -----------------
+  static:
+    script: "BOND/run_ner.py"
+    is_static: true
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+
+  step_decay:
+    script: "BOND/run_ner.py"
+    is_static: true
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "step_decay"
+
+  cosine:
+    script: "BOND/run_ner.py"
+    is_static: true
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "cosine"
+
+  plateau:
+    script: "BOND/run_ner.py"
+    is_static: true
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "plateau"
+
+  # -- GP-TS optimizer -------------------------------------------------------
+  gp_ts:
+    script: "GP_TS/gp_ts_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 100
+      random_trials: 20
+      verbose: true
+
+  # -- PPO optimizer ---------------------------------------------------------
+  ppo:
+    script: "ppo_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+      random_trials: 10
+      ppo_epochs: 10
+      ppo_batch_size: 5
+      clip_epsilon: 0.2
+      value_coeff: 0.5
+      entropy_coeff: 0.01
+      verbose: true
+
+  # -- DQN optimizer ---------------------------------------------------------
+  dqn:
+    script: "dqn_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+
+  # -- TD3 optimizer ---------------------------------------------------------
+  td3:
+    script: "td3_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+      actor_lr: 0.0003
+      critic_lr: 0.0003
+      gamma: 0.99
+      tau: 0.005
+      policy_noise: 0.2
+      noise_clip: 0.5
+      policy_delay: 2
+      buffer_size: 1000
+      batch_size: 16
+      update_after: 10
+
+  # -- SAC optimizer ---------------------------------------------------------
+  sac:
+    script: "sac_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+      gamma: 0.99
+      tau: 0.005
+      actor_lr: 0.0003
+      critic_lr: 0.0003
+      alpha_lr: 0.0003
+      init_alpha: 0.2
+      buffer_size: 1000
+      batch_size: 64
+      update_after: 10
+      update_every: 5
+
+  # -- TRPO optimizer --------------------------------------------------------
+  trpo:
+    script: "trpo_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+      random_trials: 10
+      trpo_iters: 10
+      max_kl: 0.01
+      cg_iters: 10
+      damping: 0.1
+
+  # -- GRPO optimizer --------------------------------------------------------
+  grpo:
+    script: "ppo_ner_optimizer.py"
+    skip_model: true
+    args:
+      n_trials: 50
+      random_trials: 10
+      ppo_epochs: 10
+      ppo_batch_size: 5
+      clip_epsilon: 0.2
+      value_coeff: 0.5
+      entropy_coeff: 0.01
+      grpo: true
+      verbose: true
+
+# ----- Result aggregation ----------------------------------------------------
+# After all experiments complete, generate a summary JSON.
+summary_file: "results/_summary.json"
+
+# ----- Environment variables -------------------------------------------------
+# Exported before each subprocess call.
+env:
+  PYTHONWARNINGS: "ignore"
+  PYTHONIOENCODING: "utf-8"
+  TORCH_WARNINGS: "none"
+  PYTORCH_CUDA_ALLOC_CONF: ""
+  CUDA_LAUNCH_BLOCKING: "1"
