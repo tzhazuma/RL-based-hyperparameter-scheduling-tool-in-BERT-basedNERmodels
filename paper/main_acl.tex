@@ -235,9 +235,7 @@ Preliminary experiments with the remaining RL methods (TD3, DQN, TRPO, SAC, GRPO
 
 \subsection{Results on Wikigold Dataset}
 
-On Wikigold, TD3 was run for 227 trials with 1 epoch per trial, achieving a best $F_1$ of 54.0\%. This result reflects TD3's capacity to explore the continuous learning rate space through its actor-critic framework, even under the constraint of single-epoch trials. The extensive trial count (227) allowed TD3 to accumulate diverse experience, though the single-epoch budget per trial limits the agent's ability to learn long-horizon scheduling policies that depend on observing multi-epoch training trajectories.
-
-The static baseline and GP-TS results on Wikigold are pending completion. Similarly, the remaining RL methods (DQN, TRPO, SAC, GRPO) are configured within the unified experiment runner and ready for execution. We note that the Wikigold dataset presents a moderately noisy setting where adaptive scheduling is expected to show stronger benefits once multi-epoch trial budgets are available.
+On Wikigold, the static baseline (roberta-base, 30 epochs, $lr=1 \times 10^{-5}$, batch size 16) achieves a best $F_1$ of 54.2\%. TD3 was run for 227 trials with 1 epoch per trial, reaching 54.0\%, essentially matching the static baseline. This result reflects the challenge that single-epoch trials pose for RL methods: without observing multi-epoch training dynamics, TD3 cannot learn effective scheduling policies that improve over a well-tuned fixed learning rate. GP-TS experiments on Wikigold are underway (20 trials, 3 epochs/trial), and we expect the increased per-trial epoch budget to yield more meaningful comparisons. Similarly, the remaining RL methods (DQN, TRPO, SAC, GRPO) are configured within the unified experiment runner and ready for execution. We note that the Wikigold dataset presents a moderately noisy setting where adaptive scheduling is expected to show stronger benefits once multi-epoch trial budgets are available.
 
 \begin{figure}[h!]
     \centering
