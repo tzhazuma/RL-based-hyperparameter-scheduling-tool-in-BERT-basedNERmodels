@@ -1,0 +1,29 @@
+% SOTA Comparison Table for distantly supervised NER
+% To be inserted in Section 4 or Discussion
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{CoNLL-2003} & \textbf{Webpage} & \textbf{Wikigold} \\
+\midrule
+\multicolumn{4}{c}{\textit{Supervised upper bound (RoBERTa)}} \\
+\quad Fully Supervised (BOND) & 90.11 & 72.39 & 86.43 \\
+\midrule
+\multicolumn{4}{c}{\textit{Distant supervision + denoising methods}} \\
+\quad BOND Stage I \cite{liang2020bond} & 75.61 & 59.11 & 52.15 \\
+\quad BOND (full) \cite{liang2020bond} & 81.48 & 65.74 & 60.07 \\
+\quad RoSTER \cite{meng2021roster} & 85.4 & -- & 67.8 \\
+\quad SANTA \cite{shao2023santa} & 85.11 & 71.79 & -- \\
+\quad ATSEN \cite{zhang2021atsen} & 85.59 & 70.55 & -- \\
+\quad SCDL \cite{zhang2022scdl} & 83.69 & 68.47 & 64.13 \\
+\midrule
+\multicolumn{4}{c}{\textit{Distant supervision + hyperparameter scheduling (ours)}} \\
+\quad Static baseline (roberta-base) & [TBD] & 61.5 & 54.2 \\
+\quad GP-TS tuned (ours) & [TBD] & 62.7 & [TBD] \\
+\quad TD3 tuned (ours) & -- & -- & 54.0 \\
+\bottomrule
+\end{tabular}
+\caption{Comparison with state-of-the-art distantly supervised NER methods. All scores are entity-level micro-averaged F1 (\%). ``--'' indicates the method did not report results on that dataset. Our scheduling methods operate on the BOND Stage I training loop (roberta-base) without self-training or denoising, making them complementary to the denoising approaches above. [TBD] values will be filled upon experiment completion.}
+\label{tab:sota-comparison}
+\end{table}
