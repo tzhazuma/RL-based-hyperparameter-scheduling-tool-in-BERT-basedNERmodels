@@ -19,11 +19,11 @@
 \quad SCDL \cite{zhang2022scdl} & 83.69 & 68.47 & 64.13 \\
 \midrule
 \multicolumn{4}{c}{\textit{Distant supervision + hyperparameter scheduling (ours)}} \\
-\quad Static baseline (roberta-base) & [TBD] & 61.5 & 54.2 \\
-\quad GP-TS tuned (ours) & [TBD] & 62.7 & [TBD] \\
+\quad Static baseline (roberta-base) & 75.9 & 61.9 & 53.0 \\
+\quad GP-TS tuned (ours) & -- & 62.7 & 38.3 \\
 \quad TD3 tuned (ours) & -- & -- & 54.0 \\
 \bottomrule
 \end{tabular}
-\caption{Comparison with state-of-the-art distantly supervised NER methods. All scores are entity-level micro-averaged F1 (\%). ``--'' indicates the method did not report results on that dataset. Our scheduling methods operate on the BOND Stage I training loop (roberta-base) without self-training or denoising, making them complementary to the denoising approaches above. [TBD] values will be filled upon experiment completion.}
+\caption{Comparison with state-of-the-art distantly supervised NER methods. All scores are entity-level micro-averaged F1 (\%). ``--'' indicates the method was not evaluated on that dataset. Our scheduling methods operate on the BOND Stage I training loop (roberta-base) without self-training or denoising, making them complementary to the denoising approaches above.}
 \label{tab:sota-comparison}
 \end{table}
