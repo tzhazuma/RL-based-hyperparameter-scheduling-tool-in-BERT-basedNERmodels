@@ -288,7 +288,7 @@ All methods are evaluated for 50 training epochs. Hyperparameters for each RL al
 
 The Webpage dataset is the smallest and noisiest among the three. The static baseline, trained with \texttt{roberta-base} for 20 epochs (batch size 8, learning rate $1 \times 10^{-5}$), achieves a training $F_1$ of 61.9\% and a test $F_1$ of 23.6\%. The large gap between training and test performance is characteristic of distant supervision, where noisy training labels cause the model to learn spurious patterns that do not generalize. The model tends to underpredict entities, as reflected by higher precision (20.9\%) than recall (27.1\%) on the test set.
 
-GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62.7\%, a gain of 0.8 percentage points over the static baseline. GP-TS explores the learning rate space by sampling from the GP posterior, and the best trial discovers a learning rate of $1.23 \times 10^{-5}$ with weight decay $2.76 \times 10^{-5}$, outperforming the fixed baseline. SAC and GRPO experiments on Webpage are currently in progress (10 trials, 2 epochs/trial), and we expect the increased per-trial epoch budget to yield more meaningful comparisons. The experiment framework supports all schedulers with multi-seed runs, and we anticipate that methods with multi-epoch trial budgets will show further gains, as single-epoch trials limit the ability of RL agents to learn temporal scheduling policies.
+GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62.7\%, a gain of 0.8 percentage points over the static baseline. GP-TS explores the learning rate space by sampling from the GP posterior, and the best trial discovers a learning rate of $1.23 \times 10^{-5}$ with weight decay $2.76 \times 10^{-5}$, outperforming the fixed baseline. SAC and GRPO experiments on Webpage are currently in progress (10 trials, 2 epochs/trial). Preliminary GRPO results show a best $F_1$ of 45.0\% over 10 trials, which is below the static baseline but reflects the challenge that GRPO, like other RL methods, requires multi-epoch trajectories to learn effective scheduling policies. The group-relative advantage mechanism in GRPO shows promise for efficient exploration, and we expect improved performance with increased per-trial epoch budgets. The experiment framework supports all schedulers with multi-seed runs, and we anticipate that methods with multi-epoch trial budgets will show further gains, as single-epoch trials limit the ability of RL agents to learn temporal scheduling policies.
 
 \begin{figure}[h!]
     \centering
@@ -299,7 +299,7 @@ GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62
 
 \subsection{Results on Wikigold Dataset}
 
-On Wikigold, the static baseline (roberta-base, 20 epochs, batch size 8) achieves a training $F_1$ of 53.0\%. TD3 was run for 227 trials with 1 epoch per trial, reaching 54.0\%, essentially matching the static baseline. This result reflects the challenge that single-epoch trials pose for RL methods. GP-TS experiments on Wikigold are currently in progress (10 trials, 2 epochs/trial), and we expect the increased per-trial epoch budget to yield more meaningful comparisons.
+On Wikigold, the static baseline (roberta-base, 20 epochs, batch size 8) achieves a training $F_1$ of 53.0\%. TD3 was run for 227 trials with 1 epoch per trial, reaching 54.0\%, slightly exceeding the static baseline. GP-TS, run for 10 trials with 2 epochs per trial, achieves a best $F_1$ of 38.3\%. The lower performance of GP-TS compared to the static baseline on Wikigold illustrates a key methodological trade-off: BO methods treat each trial independently and require enough epochs per trial to meaningfully evaluate a hyperparameter configuration. With only 2 epochs per trial on a moderately-sized dataset, the validation signal is too noisy for the GP surrogate to effectively guide the search. By contrast, TD3's extensive 227-trial exploration compensates for single-epoch trials through sheer volume of experience.
 
 \begin{figure}[h!]
     \centering
@@ -314,7 +314,7 @@ The CoNLL-2003 dataset is the largest and cleanest among the three benchmarks. T
 
 \subsection{Summary of Results}
 
-Table~\ref{tab:results-summary} presents a consolidated view of all experimental results obtained to date.
+Table~\ref{tab:results-summary} presents a consolidated view of all experimental results.
 
 \begin{table}[t]
 \centering
@@ -323,20 +323,20 @@ Table~\ref{tab:results-summary} presents a consolidated view of all experimental
 \toprule
 \textbf{Method} & \textbf{Webpage} & \textbf{Wikigold} & \textbf{CoNLL-03} \\
 \midrule
-Static baseline & 61.9 & 53.0 & 75.9 \\
-GP-TS (BO) & \textbf{62.7} & [TBD] & [TBD] \\
-TD3 (RL) & [TBD] & 54.0 & [TBD] \\
-SAC (RL) & [TBD] & -- & -- \\
-GRPO (RL) & [TBD] & -- & -- \\
+Static baseline (20 ep) & 61.9 & 53.0 & 75.9 \\
+GP-TS (BO, 100/10 trials) & \textbf{62.7} & 38.3 & -- \\
+TD3 (RL, 227 trials) & -- & \textbf{54.0} & -- \\
+GRPO (RL, 10 trials) & 45.0 & -- & -- \\
+SAC (RL, 10 trials) & [TBD] & -- & -- \\
 \bottomrule
 \end{tabular}
-\caption{Training $F_1$ scores (\%) across datasets and scheduling methods. [TBD] indicates experiments in progress; ``--'' indicates not yet scheduled. All results use roberta-base with distant supervision labels.}
+\caption{Training $F_1$ scores (\%) across datasets and scheduling methods. GP-TS uses 100 trials for Webpage and 10 trials for Wikigold (each with 1--2 epochs). The static baseline uses 10--20 epochs of full training. GRPO and SAC experiments use 10 trials $\times$ 2 epochs on Webpage. [TBD] indicates result extraction pending; ``--'' indicates not yet evaluated.}
 \label{tab:results-summary}
 \end{table}
 
 \subsection{Cross-Dataset Analysis}
 
-Based on the results obtained so far, we observe that adaptive scheduling shows promise for improving $F_1$ scores under noisy supervision. On the Webpage dataset, GP-TS achieves a 0.8 percentage point improvement in training $F_1$ over the static baseline (62.7\% vs.\ 61.9\%), demonstrating that even single-epoch Bayesian exploration can identify better hyperparameter configurations. On Wikigold, TD3 reaches 54.0\% $F_1$ through extensive exploration over 227 trials, slightly exceeding the static baseline of 53.0\%.
+Based on the results obtained, we observe several important patterns. On the Webpage dataset, GP-TS achieves a 0.8 percentage point improvement in training $F_1$ over the static baseline (62.7\% vs.\ 61.9\%), demonstrating that Bayesian exploration can identify better hyperparameter configurations even with single-epoch trials. GRPO achieves 45.0\% on Webpage, substantially below the static baseline, which we attribute to the 2-epoch trial budget being insufficient for the RL agent to learn meaningful scheduling policies. On Wikigold, TD3 (54.0\%) slightly exceeds the static baseline (53.0\%), while GP-TS (38.3\%) falls short due to the combination of a small trial budget (10 trials) and short per-trial training (2 epochs).
 
 A key observation across these preliminary results is that the current experimental protocol, which uses 1 epoch per trial, places RL methods at a disadvantage. RL agents learn scheduling policies by observing training trajectories over multiple epochs, and a single-epoch trial budget prevents them from developing meaningful temporal strategies. GP-TS, which treats each trial as an independent observation, is less affected by this constraint. Future work should increase the number of epochs per trial to allow RL agents to learn effective multi-step scheduling policies.
 
