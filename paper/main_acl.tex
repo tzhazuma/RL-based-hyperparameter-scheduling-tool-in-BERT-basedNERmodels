@@ -45,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-Distantly supervised Named Entity Recognition (NER) produces noisy, incomplete labels that make training highly sensitive to hyperparameter choices. We propose \textit{automated hyperparameter scheduling} for this setting, combining Bayesian Optimization with Reinforcement Learning (RL). We evaluate six scheduling algorithms, Gaussian Process Thompson Sampling (GP-TS), Deep Q-Network (DQN), Trust Region Policy Optimization (TRPO), Soft Actor-Critic (SAC), Twin Delayed Deep Deterministic Policy Gradient (TD3), and Group Relative Policy Optimization (GRPO), a critic-free PPO variant, that dynamically adjust hyperparameters during training. Using BERT-CRF and RoBERTa-CRF as base models, we compare adaptive scheduling against Step Decay, Cosine Annealing, and ReduceLROnPlateau across three benchmark datasets. On Webpage, GP-TS achieves 62.7\% $F_1$, a 1.2 point gain over the static baseline (61.5\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that GP-TS provides interpretable, sample-efficient exploration, while RL methods show strong potential for adaptive policies but require multi-epoch trial budgets to realize it. Our results demonstrate that automated scheduling is a viable, complementary strategy for improving NER under weak supervision.
+Distantly supervised Named Entity Recognition (NER) produces noisy, incomplete labels that make training highly sensitive to hyperparameter choices. We propose \textit{automated hyperparameter scheduling} for this setting, combining Bayesian Optimization with Reinforcement Learning (RL). We evaluate six scheduling algorithms, Gaussian Process Thompson Sampling (GP-TS), Deep Q-Network (DQN), Trust Region Policy Optimization (TRPO), Soft Actor-Critic (SAC), Twin Delayed Deep Deterministic Policy Gradient (TD3), and Group Relative Policy Optimization (GRPO), a critic-free PPO variant, that dynamically adjust hyperparameters during training. Using BERT-CRF and RoBERTa-CRF as base models, we compare adaptive scheduling against Step Decay, Cosine Annealing, and ReduceLROnPlateau across three benchmark datasets. On Webpage, GP-TS achieves 62.7\% $F_1$, a 0.8 point gain over the static baseline (61.9\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that GP-TS provides interpretable, sample-efficient exploration, while RL methods show strong potential for adaptive policies but require multi-epoch trial budgets to realize it. Our results demonstrate that automated scheduling is a viable, complementary strategy for improving NER under weak supervision.
 \end{abstract}
 
 \section{Introduction}
@@ -58,13 +58,13 @@ Two paradigms address this problem. \textit{Bayesian Optimization} (BO) methods,
 
 To address this gap, we present the first systematic comparison of BO and RL scheduling for distantly supervised NER. We evaluate GP-TS (probabilistic BO), TD3 (off-policy actor-critic), SAC (maximum-entropy RL), TRPO (on-policy constrained policy gradient), DQN (value-based discrete-action RL), and GRPO (Group Relative Policy Optimization), a recent PPO variant that eliminates the critic network by estimating advantages through group-relative comparisons. We apply these methods to dynamically adjust hyperparameters during training, using BERT-CRF and RoBERTa-CRF as base models, and compare against Step Decay, Cosine Annealing, and ReduceLROnPlateau baselines across three benchmark datasets.
 
-Our experiments on \textbf{Webpage}, \textbf{Wikigold}, and \textbf{CoNLL-2003} show that automated schedulers improve over static baselines. On Webpage, GP-TS achieves 62.7\% $F_1$, a 1.2 point gain over the static baseline (61.5\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that single-epoch trial budgets disadvantage RL methods, which require multi-epoch trajectories to learn effective scheduling policies, while BO methods like GP-TS are less affected by this constraint.
+Our experiments on \textbf{Webpage}, \textbf{Wikigold}, and \textbf{CoNLL-2003} show that automated schedulers improve over static baselines. On Webpage, GP-TS achieves 62.7\% $F_1$, a 0.8 point gain over the static baseline (61.9\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that single-epoch trial budgets disadvantage RL methods, which require multi-epoch trajectories to learn effective scheduling policies, while BO methods like GP-TS are less affected by this constraint.
 
 \textbf{Contributions:}
 \begin{enumerate}
     \item We present the first comparative study of GP-TS and five deep RL algorithms (TD3, DQN, TRPO, SAC, GRPO) for dynamic hyperparameter scheduling in distantly supervised NER, evaluating on three benchmark datasets against three standard scheduler baselines.
     \item We introduce a unified framework for modular integration of scheduling strategies into the NER training loop, supporting both BERT-CRF and RoBERTa-CRF architectures.
-    \item We demonstrate that GP-TS improves over the static baseline by 1.2 $F_1$ points on Webpage (62.7\% vs.\ 61.5\%), and that TD3 achieves 54.0\% $F_1$ on Wikigold, providing the first empirical evidence that automated scheduling benefits noisy-label NER.
+    \item We demonstrate that GP-TS improves over the static baseline by 0.8 $F_1$ points on Webpage (62.7\% vs.\ 61.9\%), and that TD3 achieves 54.0\% $F_1$ on Wikigold, providing the first empirical evidence that automated scheduling benefits noisy-label NER.
     \item We provide an ablation study identifying learning rate and warmup steps as the most impactful hyperparameters for scheduling, and we compare our scheduling approach with six state-of-the-art distantly supervised NER methods.
 \end{enumerate}
 
@@ -287,7 +287,7 @@ On the Webpage dataset, the smallest and noisiest of the three, the static basel
 
 GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62.7\%, a gain of 0.8 percentage points over the static baseline. GP-TS explores the learning rate space by sampling from the GP posterior, and the best trial discovers a learning rate of $1.23 \times 10^{-5}$ with weight decay $2.76 \times 10^{-5}$, outperforming the fixed baseline. Under the same 10-trial, 2-epoch budget on Webpage, GRPO reaches 45.0\% and SAC reaches 10.0\% best training $F_1$, both remaining well below the static baseline. These results are consistent with the observation that RL-based schedulers require richer multi-epoch trajectories before their policy learning becomes competitive.
 
-\textbf{Key findings on Webpage:} GP-TS achieves a 1.2 point $F_1$ improvement over the static baseline (62.7\% vs.\ 61.5\% on training), confirming that Bayesian exploration identifies better hyperparameter configurations even with single-epoch trials. RL methods underperform under single-epoch budgets, as they cannot learn temporal scheduling policies from one-epoch trajectories.
+\textbf{Key findings on Webpage:} GP-TS achieves a 0.8 point $F_1$ improvement over the static baseline (62.7\% vs.\ 61.9\% on training), confirming that Bayesian exploration identifies better hyperparameter configurations even with single-epoch trials. RL methods underperform under single-epoch budgets, as they cannot learn temporal scheduling policies from one-epoch trajectories.
 
 \begin{figure}[h!]
     \centering
@@ -445,7 +445,7 @@ SAC balances three distinct optimizations: training critics to estimate the rewa
 
 \subsection{Empirical Performance Comparison}
 
-GP-TS achieves a best $F_1$ of 62.7\% on Webpage (100 trials, 1 epoch/trial), improving over the static baseline of 61.5\% by 1.2 points. TD3 achieves 54.0\% on Wikigold over 227 trials with the same single-epoch budget, a 1.0 point gain over the static baseline. These results should be interpreted with caution: the single-epoch trial protocol limits RL methods more than GP-TS, as RL agents require multi-epoch trajectories to learn effective scheduling policies, while GP-TS treats each trial independently and is therefore less constrained.
+GP-TS achieves a best $F_1$ of 62.7\% on Webpage (100 trials, 1 epoch/trial), improving over the static baseline of 61.9\% by 0.8 points. TD3 achieves 54.0\% on Wikigold over 227 trials with the same single-epoch budget, a 1.0 point gain over the static baseline. These results should be interpreted with caution: the single-epoch trial protocol limits RL methods more than GP-TS, as RL agents require multi-epoch trajectories to learn effective scheduling policies, while GP-TS treats each trial independently and is therefore less constrained.
 
 We expect that with multi-epoch trials, TD3 and other RL methods will show stronger gains, as their policies can learn to adapt learning rates based on observed training dynamics across epochs. GRPO, by eliminating the critic network, should achieve competitive results with lower memory overhead, making it attractive for resource-constrained settings.
 
@@ -461,7 +461,7 @@ GP-TS is a reliable, interpretable, and computationally efficient strategy, exce
 
 \section{Conclusion and Future Work}
 
-We explored automated hyperparameter scheduling for distantly supervised NER, comparing GP-TS with deep RL algorithms (TD3, SAC, TRPO, DQN, GRPO) against standard scheduler baselines (Step Decay, Cosine Annealing, ReduceLROnPlateau). Our results demonstrate that adaptive scheduling improves performance over static baselines: GP-TS achieves 62.7\% $F_1$ on Webpage, surpassing the static baseline of 61.5\% by 1.2 points, while TD3 reaches 54.0\% on Wikigold, a 1.0 point gain over the static baseline of 53.0\%.
+We explored automated hyperparameter scheduling for distantly supervised NER, comparing GP-TS with deep RL algorithms (TD3, SAC, TRPO, DQN, GRPO) against standard scheduler baselines (Step Decay, Cosine Annealing, ReduceLROnPlateau). Our results demonstrate that adaptive scheduling improves performance over static baselines: GP-TS achieves 62.7\% $F_1$ on Webpage, surpassing the static baseline of 61.9\% by 0.8 points, while TD3 reaches 54.0\% on Wikigold, a 1.0 point gain over the static baseline of 53.0\%.
 
 These findings confirm that data-driven scheduling of hyperparameters enhances learning under noisy supervision. GP-TS provides sample-efficient global optimization and is well-suited to single-epoch trial budgets, while RL methods such as TD3 demonstrate the capacity to explore continuous action spaces effectively. We find that the single-epoch trial protocol disadvantages RL agents, which require multi-epoch trajectories to learn meaningful temporal scheduling policies. Increasing the number of epochs per trial is a clear direction for unlocking the full potential of RL-based scheduling.
 
@@ -503,10 +503,10 @@ We acknowledge the following specific limitations:
 
 \section{Ethical Considerations}
 
-This work focuses on fundamental methodological improvements for hyperparameter scheduling in distantly supervised NER. The experiments use only publicly available benchmark datasets (CoNLL-2003, Webpage, Wikigold) under distant supervision. No human subjects, sensitive data, or real-world deployments are involved. The computational experiments were conducted on a single consumer GPU (NVIDIA RTX 4060, 8GB VRAM), and we acknowledge the environmental impact of GPU computation. All code and experimental configurations are publicly released to facilitate reproducibility and reduce redundant computation by future researchers.
+This work focuses on fundamental methodological improvements for hyperparameter scheduling in distantly supervised NER. The experiments use only publicly available benchmark datasets (CoNLL-2003, Webpage, Wikigold) under distant supervision. No human subjects, sensitive data, or real-world deployments are involved. The computational experiments were conducted on a single consumer GPU (NVIDIA RTX 4060, 8GB VRAM), and we acknowledge the environmental impact of GPU computation. An anonymized code repository or software archive will be provided in the supplementary material for double-blind review, and the full codebase will be released publicly after the review process.
 
 \section*{Code Availability}
-The complete implementation, including all scheduler algorithms, the unified experiment runner, and analysis tools, is available at \url{https://github.com/tzhazuma/RL-based-hyperparameter-scheduling-tool-in-BERT-basedNERmodels}.
+The complete implementation, including all scheduler algorithms, the unified experiment runner, and analysis tools, is provided as anonymized supplementary software for review and will be released publicly upon publication.
 
 % \section*{Acknowledgments}
 % We thank the anonymous reviewers for their constructive feedback.
@@ -621,7 +621,7 @@ Figure~\ref{fig:learning-curves} shows the per-epoch validation $F_1$ curves for
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.85\columnwidth]{webpage_gp_ts.png}
-    \caption{Validation $F_1$ curves on the Webpage dataset. GP-TS explores diverse learning rate configurations across trials, with the best trial (62.7\%) outperforming the static baseline (61.5\%).}
+    \caption{Validation $F_1$ curves on the Webpage dataset. GP-TS explores diverse learning rate configurations across trials, with the best trial (62.7\%) outperforming the static baseline (61.9\%).}
     \label{fig:learning-curves}
 \end{figure}
 
