@@ -30,6 +30,8 @@ schedulers:
 
 seeds:
   - 42
+  - 123
+  - 456
 
 # ----- Repository paths (relative to repo root) ------------------------------
 repo_root: "."
