@@ -63,14 +63,86 @@ def build_cartesian_product(config):
     )
 
 
+def get_expected_artifacts(config, scheduler):
+    sched_config = config["scheduler_configs"].get(scheduler, {})
+    return sched_config.get("expected_artifacts", [])
+
+
+def get_cleanup_config(config, scheduler):
+    sched_config = config["scheduler_configs"].get(scheduler, {})
+    cleanup = dict(config.get("default_cleanup", {}))
+    cleanup.update(sched_config.get("cleanup", {}))
+    return cleanup
+
+
 def get_output_dir(config, dataset, model, scheduler, seed):
     return os.path.join(
         config["results_dir"], dataset, model, scheduler, f"seed_{seed}"
     )
 
 
-def is_completed(output_dir):
-    return os.path.isfile(os.path.join(output_dir, "results.json"))
+def missing_artifacts(output_dir, expected_artifacts):
+    if not expected_artifacts:
+        return []
+
+    output_path = Path(output_dir)
+    missing = []
+    for pattern in expected_artifacts:
+        if not list(output_path.glob(pattern)):
+            missing.append(pattern)
+    return missing
+
+
+def is_completed(output_dir, expected_artifacts):
+    if not os.path.isfile(os.path.join(output_dir, "results.json")):
+        return False
+    return not missing_artifacts(output_dir, expected_artifacts)
+
+
+def _contains_kept_path(target_path, keep_paths):
+    target_path = Path(target_path).resolve()
+    for keep_path in keep_paths:
+        keep_path = Path(keep_path).resolve()
+        if keep_path == target_path:
+            return True
+        if target_path.is_dir():
+            try:
+                keep_path.relative_to(target_path)
+                return True
+            except ValueError:
+                continue
+    return False
+
+
+def cleanup_output_dir(output_dir, cleanup_config, keep_patterns):
+    if not cleanup_config or not cleanup_config.get("enabled", False):
+        return []
+
+    output_path = Path(output_dir)
+    keep_paths = {output_path / "results.json", output_path / "experiment.log"}
+    for pattern in keep_patterns:
+        keep_paths.update(output_path.glob(pattern))
+
+    removed = []
+    for pattern in cleanup_config.get("remove_dirs", []):
+        for target in sorted(output_path.glob(pattern), reverse=True):
+            if not target.exists() or not target.is_dir():
+                continue
+            if _contains_kept_path(target, keep_paths):
+                continue
+            subprocess.run(["rm", "-rf", str(target)], check=False)
+            removed.append(str(target))
+
+    for pattern in cleanup_config.get("remove_files", []):
+        for target in sorted(output_path.glob(pattern)):
+            if not target.exists() or not target.is_file():
+                continue
+            if _contains_kept_path(target, keep_paths):
+                continue
+            target.unlink(missing_ok=True)
+            removed.append(str(target))
+
+    return removed
 
 
 def build_command(config, dataset, model, scheduler, seed, repo_root):
@@ -78,6 +150,7 @@ def build_command(config, dataset, model, scheduler, seed, repo_root):
     is_static = sched_config.get("is_static", False)
     sched_args = sched_config.get("args", {})
     skip_model = sched_config.get("skip_model", False)
+    n_epochs = sched_config.get("epochs", config.get("n_epochs", 10))
     overrides = _ARG_NAME_OVERRIDES.get(scheduler, {})
 
     model_type = config["model_type_map"][model]
@@ -90,7 +163,7 @@ def build_command(config, dataset, model, scheduler, seed, repo_root):
     script_path = os.path.join(repo_root, sched_config["script"])
     output_dir = os.path.join(repo_root, output_dir_rel)
 
-    cmd = ["python", script_path]
+    cmd = [sys.executable, script_path]
 
     if is_static:
         cmd.extend(
@@ -99,7 +172,7 @@ def build_command(config, dataset, model, scheduler, seed, repo_root):
                 "--model_type", model_type,
                 "--model_name_or_path", model,
                 "--output_dir", output_dir,
-                "--num_train_epochs", str(config["n_epochs"]),
+                "--num_train_epochs", str(n_epochs),
                 "--max_seq_length", str(config["max_seq_length"]),
                 "--cache_dir", cache_dir,
                 "--seed", str(seed),
@@ -115,7 +188,7 @@ def build_command(config, dataset, model, scheduler, seed, repo_root):
                 "--output_dir", output_dir,
                 "--model_type", model_type,
                 f"--{model_name_flag}", model,
-                f"--{n_epochs_flag}", str(config["n_epochs"]),
+                f"--{n_epochs_flag}", str(n_epochs),
                 "--max_seq_length", str(config["max_seq_length"]),
                 "--cache_dir", cache_dir,
                 "--seed", str(seed),
@@ -124,8 +197,6 @@ def build_command(config, dataset, model, scheduler, seed, repo_root):
         )
         if skip_model:
             cmd.append("--skip_model_saving")
-        if scheduler == "gp_ts":
-            cmd.append("--reset")
 
     for key, value in sched_args.items():
         if isinstance(value, bool):
@@ -144,7 +215,15 @@ def write_checkpoint(output_dir, metadata):
         json.dump(metadata, f, indent=2)
 
 
-def run_experiment(cmd, output_dir, timeout_seconds, repo_root, env_extra):
+def run_experiment(
+    cmd,
+    output_dir,
+    timeout_seconds,
+    repo_root,
+    env_extra,
+    expected_artifacts,
+    cleanup_config,
+):
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, "experiment.log")
 
@@ -164,6 +243,26 @@ def run_experiment(cmd, output_dir, timeout_seconds, repo_root, env_extra):
             )
         elapsed = time.time() - start_time
         if proc.returncode == 0:
+            missing = missing_artifacts(output_dir, expected_artifacts)
+            if missing:
+                write_checkpoint(
+                    output_dir,
+                    {
+                        "status": "artifact_missing",
+                        "elapsed_seconds": round(elapsed, 1),
+                        "returncode": 0,
+                        "command": " ".join(cmd),
+                        "missing_artifacts": missing,
+                    },
+                )
+                return {
+                    "status": "artifact_missing",
+                    "elapsed": elapsed,
+                    "returncode": 0,
+                    "missing_artifacts": missing,
+                }
+
+            removed = cleanup_output_dir(output_dir, cleanup_config, expected_artifacts)
             write_checkpoint(
                 output_dir,
                 {
@@ -171,9 +270,20 @@ def run_experiment(cmd, output_dir, timeout_seconds, repo_root, env_extra):
                     "elapsed_seconds": round(elapsed, 1),
                     "returncode": 0,
                     "command": " ".join(cmd),
+                    "expected_artifacts": expected_artifacts,
+                    "cleanup_removed": removed,
                 },
             )
             return {"status": "success", "elapsed": elapsed, "returncode": 0}
+        write_checkpoint(
+            output_dir,
+            {
+                "status": "failed",
+                "elapsed_seconds": round(elapsed, 1),
+                "returncode": proc.returncode,
+                "command": " ".join(cmd),
+            },
+        )
         return {
             "status": "failed",
             "elapsed": elapsed,
@@ -181,9 +291,28 @@ def run_experiment(cmd, output_dir, timeout_seconds, repo_root, env_extra):
         }
     except subprocess.TimeoutExpired:
         elapsed = time.time() - start_time
+        write_checkpoint(
+            output_dir,
+            {
+                "status": "timeout",
+                "elapsed_seconds": round(elapsed, 1),
+                "returncode": None,
+                "command": " ".join(cmd),
+            },
+        )
         return {"status": "timeout", "elapsed": elapsed, "returncode": None}
     except Exception as exc:
         elapsed = time.time() - start_time
+        write_checkpoint(
+            output_dir,
+            {
+                "status": "error",
+                "elapsed_seconds": round(elapsed, 1),
+                "returncode": None,
+                "command": " ".join(cmd),
+                "error": str(exc),
+            },
+        )
         return {
             "status": "error",
             "elapsed": elapsed,
@@ -219,6 +348,7 @@ def main():
         help="Print all experiment combinations without executing",
     )
     parser.add_argument("--dataset", help="Filter by dataset name")
+    parser.add_argument("--model", help="Filter by model name")
     parser.add_argument("--scheduler", help="Filter by scheduler name")
     parser.add_argument("--seed", type=int, help="Filter by random seed")
     args = parser.parse_args()
@@ -239,6 +369,8 @@ def main():
 
     if args.dataset:
         combos = [c for c in combos if c[0] == args.dataset]
+    if args.model:
+        combos = [c for c in combos if c[1] == args.model]
     if args.scheduler:
         combos = [c for c in combos if c[2] == args.scheduler]
     if args.seed is not None:
@@ -262,7 +394,10 @@ def main():
         skipped = 0
         for ds, model, sched, seed in combos:
             output_dir_rel = get_output_dir(config, ds, model, sched, seed)
-            done = is_completed(os.path.join(repo_root, output_dir_rel))
+            done = is_completed(
+                os.path.join(repo_root, output_dir_rel),
+                get_expected_artifacts(config, sched),
+            )
             marker = "  [SKIP - completed]" if done else ""
             print(f"  {ds:12s} {model:16s} {sched:12s} seed_{seed}{marker}")
             if done:
@@ -294,8 +429,10 @@ def main():
         output_dir_rel = get_output_dir(config, ds, model, sched, seed)
         output_dir = os.path.join(repo_root, output_dir_rel)
         exp_id = f"{ds}/{model}/{sched}/seed_{seed}"
+        expected_artifacts = get_expected_artifacts(config, sched)
+        cleanup_config = get_cleanup_config(config, sched)
 
-        if is_completed(output_dir):
+        if is_completed(output_dir, expected_artifacts):
             print(f"[{i:4d}/{total}] SKIP  {exp_id}")
             skipped += 1
             continue
@@ -303,7 +440,15 @@ def main():
         print(f"[{i:4d}/{total}] RUN   {exp_id}")
         cmd = build_command(config, ds, model, sched, seed, repo_root)
 
-        result = run_experiment(cmd, output_dir, timeout, repo_root, env_extra)
+        result = run_experiment(
+            cmd,
+            output_dir,
+            timeout,
+            repo_root,
+            env_extra,
+            expected_artifacts,
+            cleanup_config,
+        )
 
         elapsed_str = format_time(result["elapsed"])
         if result["status"] == "success":
@@ -311,6 +456,11 @@ def main():
             successes += 1
         elif result["status"] == "timeout":
             print(f"               TIMEOUT ({elapsed_str})")
+            failures += 1
+        elif result["status"] == "artifact_missing":
+            print(
+                f"               FAIL  ({elapsed_str}) missing={result.get('missing_artifacts')}"
+            )
             failures += 1
         else:
             print(f"               FAIL  ({elapsed_str}) rc={result.get('returncode')}")

@@ -8,7 +8,7 @@ import os, sys, argparse, json, random, subprocess, time
 import torch, numpy as np
 from pathlib import Path
 import shutil  # 新增导入
-from gp_ts_ner_optimizer import HyperparameterSpace  # 复用已有定义
+from ppo_ner_optimizer import HyperparameterSpace  # 复用已有定义
 
 # 简单的DQN网络
 class DQNNetwork(torch.nn.Module):
@@ -215,9 +215,11 @@ def main():
 
     best = optimizer.optimize()
     print(f"Best F1: {best['best_f1']}, config: {best['best_config']}")
-    # 保存结果
-    with open("dqn_optimization_result.json", "w") as f:
+    output_path = Path(args.output_dir)
+    with open(output_path / "final_results.json", "w") as f:
         json.dump(best, f, indent=2)
+    with open(output_path / "optimization_results.json", "w") as f:
+        json.dump([{"f1": best["best_f1"], "config": best["best_config"], "status": "success", "trial": 0}], f, indent=2)
 
 if __name__ == "__main__":
     main()

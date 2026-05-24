@@ -14,10 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import argparse
 import glob
 import logging
-import os
 import random
 import copy
 import math
@@ -28,7 +31,6 @@ from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, RandomSampler
 from torch.utils.data.distributed import DistributedSampler
 from tqdm import tqdm, trange
-import sys
 from torch.optim import AdamW
 from transformers import (
     WEIGHTS_NAME,
@@ -56,6 +58,7 @@ from modeling_bert import BERTForTokenClassification_v2
 from data_utils import load_and_cache_examples, get_labels
 from model_utils import mt_update, get_mt_loss, opt_grad
 from eval import evaluate
+from lr_schedulers import StepDecayScheduler, CosineAnnealingScheduler, ReduceLROnPlateauScheduler
 
 try:
     from torch.utils.tensorboard import SummaryWriter
@@ -100,7 +103,13 @@ def train(args, train_dataset, model, tokenizer, labels, pad_token_label_id):
 
     args.train_batch_size = args.per_gpu_train_batch_size * max(1, args.n_gpu)
     train_sampler = RandomSampler(train_dataset) if args.local_rank == -1 else DistributedSampler(train_dataset)
-    train_dataloader = DataLoader(train_dataset, sampler=train_sampler, batch_size=args.train_batch_size)
+    train_dataloader = DataLoader(
+        train_dataset,
+        sampler=train_sampler,
+        batch_size=args.train_batch_size,
+        num_workers=args.dataloader_num_workers,
+        pin_memory=args.dataloader_pin_memory,
+    )
 
     if args.max_steps > 0:
         t_total = args.max_steps
@@ -122,6 +131,13 @@ def train(args, train_dataset, model, tokenizer, labels, pad_token_label_id):
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=t_total
     )
+    custom_lr_scheduler = None
+    if args.lr_scheduler == "step_decay":
+        custom_lr_scheduler = StepDecayScheduler(initial_lr=args.learning_rate, step_size=10, gamma=0.5)
+    elif args.lr_scheduler == "cosine":
+        custom_lr_scheduler = CosineAnnealingScheduler(initial_lr=args.learning_rate, T_max=max(1, int(args.num_train_epochs)), eta_min=1e-7)
+    elif args.lr_scheduler == "plateau":
+        custom_lr_scheduler = ReduceLROnPlateauScheduler(initial_lr=args.learning_rate, factor=0.5, patience=5, min_lr=1e-7)
 
     # Check if saved optimizer or scheduler states exist
     if os.path.isfile(os.path.join(args.model_name_or_path, "optimizer.pt")) and os.path.isfile(
@@ -187,6 +203,8 @@ def train(args, train_dataset, model, tokenizer, labels, pad_token_label_id):
     )
     set_seed(args)  # Added here for reproductibility
     best_dev, best_test = [0, 0, 0], [0, 0, 0]
+    best_dev_f1_history = []
+    no_improvement_epochs = 0
     if args.mt:
         teacher_model = model
     
@@ -366,9 +384,34 @@ def train(args, train_dataset, model, tokenizer, labels, pad_token_label_id):
                     logging_loss = tr_loss
 
 
-            if args.max_steps > 0 and global_step > args.max_steps:
-                epoch_iterator.close()
-                break
+                if args.max_steps > 0 and global_step > args.max_steps:
+                    epoch_iterator.close()
+                    break
+
+        if custom_lr_scheduler is not None:
+            metric = None
+            if args.lr_scheduler == "plateau":
+                metric = 1.0 - best_dev[-1]
+            new_lr = custom_lr_scheduler.step(epoch, metric=metric)
+            for group in optimizer.param_groups:
+                group["lr"] = new_lr
+
+        if args.evaluate_during_training and best_dev[-1] > 0:
+            best_dev_f1_history.append(best_dev[-1])
+            if args.train_early_stopping_patience > 0:
+                if len(best_dev_f1_history) == 1 or best_dev[-1] > max(best_dev_f1_history[:-1]) + args.train_early_stopping_min_delta:
+                    no_improvement_epochs = 0
+                else:
+                    no_improvement_epochs += 1
+                    logger.info(
+                        "Early-stop patience %d/%d",
+                        no_improvement_epochs,
+                        args.train_early_stopping_patience,
+                    )
+                    if no_improvement_epochs >= args.train_early_stopping_patience:
+                        logger.info("Stopping training early due to dev F1 plateau.")
+                        train_iterator.close()
+                        break
         if args.max_steps > 0 and global_step > args.max_steps:
             train_iterator.close()
             break
@@ -470,9 +513,34 @@ def main():
         help="If > 0: set total number of training steps to perform. Override num_train_epochs.",
     )
     parser.add_argument("--warmup_steps", default=0, type=int, help="Linear warmup over warmup_steps.")
+    parser.add_argument(
+        "--lr_scheduler",
+        default="linear_warmup",
+        choices=["linear_warmup", "step_decay", "cosine", "plateau"],
+        help="Learning-rate scheduler variant.",
+    )
 
     parser.add_argument("--logging_steps", type=int, default=50, help="Log every X updates steps.")
     parser.add_argument("--save_steps", type=int, default=50, help="Save checkpoint every X updates steps.")
+    parser.add_argument("--dataloader_num_workers", type=int, default=0, help="DataLoader worker count.")
+    parser.add_argument("--dataloader_pin_memory", action="store_true", help="Enable DataLoader pin_memory.")
+    parser.add_argument(
+        "--eval_on_epoch_end_only",
+        action="store_true",
+        help="Reserved flag for epoch-end evaluation-only workflows.",
+    )
+    parser.add_argument(
+        "--train_early_stopping_patience",
+        type=int,
+        default=0,
+        help="Stop training after this many epochs without dev F1 improvement.",
+    )
+    parser.add_argument(
+        "--train_early_stopping_min_delta",
+        type=float,
+        default=0.0,
+        help="Minimum dev F1 improvement to reset early-stop patience.",
+    )
     parser.add_argument(
         "--eval_all_checkpoints",
         action="store_true",
