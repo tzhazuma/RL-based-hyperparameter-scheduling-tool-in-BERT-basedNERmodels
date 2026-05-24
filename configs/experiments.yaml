@@ -52,7 +52,7 @@ dataset_dirs:
 
 # ----- Execution parameters --------------------------------------------------
 timeout_seconds: 14400       # 4 hours per experiment
-n_epochs: 1
+n_epochs: 2
 max_seq_length: 128
 cache_dir_rel: "BOND/pretrained_model"
 run_ner_path_rel: "BOND/run_ner.py"
