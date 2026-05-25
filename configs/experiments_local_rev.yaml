@@ -1,0 +1,365 @@
+# =============================================================================
+# Experiment Orchestration Configuration
+# =============================================================================
+# Defines the full Cartesian product experiment grid, per-scheduler settings,
+# dataset paths, and execution parameters for the unified experiment runner.
+#
+# The runner generates all combinations of:
+#   datasets x models x schedulers x seeds
+# and executes each via subprocess, with checkpointing and result aggregation.
+# =============================================================================
+
+# ----- Top-level grid dimensions ---------------------------------------------
+datasets:
+  - conll03
+  - wikigold
+  - webpage
+
+models:
+  - roberta-base
+  - bert-base-cased
+
+schedulers:
+  - static
+  - step_decay
+  - cosine
+  - plateau
+  - gp_ts
+  - td3
+  - sac
+
+seeds:
+  - 42
+
+# ----- Repository paths (relative to repo root) ------------------------------
+repo_root: "."
+results_dir: "results_rev"
+bond_dir: "BOND"
+gp_ts_dir: "GP_TS"
+
+# Determine model_type from model_name
+model_type_map:
+  bert-base-cased: "bert"
+  roberta-base: "roberta"
+
+# Dataset directory mapping (appended to bond_dir/dataset/)
+dataset_dirs:
+  webpage: "webpage_distant"
+  wikigold: "wikigold_distant"
+  conll03: "conll03_distant"
+  ontonotes5: "OntoNote_distant"
+  twitter: "twitter_distant"
+
+# ----- Execution parameters --------------------------------------------------
+timeout_seconds: 14400       # 4 hours per experiment
+n_epochs: 2
+max_seq_length: 128
+cache_dir_rel: "BOND/pretrained_model"
+run_ner_path_rel: "BOND/run_ner.py"
+submission_scope_only: true
+
+# ----- Default cleanup policy -------------------------------------------------
+default_cleanup:
+  enabled: true
+  remove_dirs:
+    - "checkpoint-*"
+    - "trial_*"
+    - "tfboard"
+  remove_files:
+    - "optimizer.pt"
+    - "scheduler.pt"
+    - "model.pt"
+    - "training_args.bin"
+    - "pytorch_model.bin"
+
+# ----- Shared runtime knobs ---------------------------------------------------
+runtime_defaults:
+  logging_steps: 100
+  save_steps: 1000000
+  gradient_accumulation_steps: 1
+  dataloader_num_workers: 2
+  dataloader_pin_memory: true
+  fp16: true
+
+optimizer_runtime_defaults:
+  logging_steps: 100
+  save_steps: 1000000
+  gradient_accumulation_steps: 1
+  dataloader_num_workers: 2
+  dataloader_pin_memory: true
+  fp16: true
+  cleanup_after_trial: true
+  keep_final_model: false
+  early_stopping: true
+  patience: 10
+  min_delta: 0.001
+
+# ----- Per-scheduler command configuration -----------------------------------
+# Each scheduler has:
+#   script:        Path to optimizer/trainer script (relative to repo_root)
+#   args:          Dictionary of CLI arguments (keys without --, auto-prefixed)
+#   is_static:     If true, uses BOND/run_ner.py directly (static scheduler family)
+#   skip_model:    Whether to add --skip_model_saving (for optimizer scripts)
+scheduler_configs:
+  # -- Static scheduler family (use BOND/run_ner.py directly) -----------------
+  static:
+    script: "BOND/run_ner.py"
+    is_static: true
+    epochs: 10
+    expected_artifacts:
+      - "eval_results.txt"
+      - "test_results.txt"
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      logging_steps: 100
+      save_steps: 1000000
+      dataloader_num_workers: 2
+      gradient_accumulation_steps: 1
+      dataloader_pin_memory: true
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "checkpoint-*"
+        - "tfboard"
+      remove_files:
+        - "optimizer.pt"
+        - "scheduler.pt"
+        - "model.pt"
+        - "training_args.bin"
+        - "pytorch_model.bin"
+
+  step_decay:
+    script: "BOND/run_ner.py"
+    is_static: true
+    epochs: 10
+    expected_artifacts:
+      - "eval_results.txt"
+      - "test_results.txt"
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "step_decay"
+      logging_steps: 100
+      save_steps: 1000000
+      dataloader_num_workers: 2
+      gradient_accumulation_steps: 1
+      dataloader_pin_memory: true
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "checkpoint-*"
+        - "tfboard"
+      remove_files:
+        - "optimizer.pt"
+        - "scheduler.pt"
+        - "model.pt"
+        - "training_args.bin"
+        - "pytorch_model.bin"
+
+  cosine:
+    script: "BOND/run_ner.py"
+    is_static: true
+    epochs: 10
+    expected_artifacts:
+      - "eval_results.txt"
+      - "test_results.txt"
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "cosine"
+      logging_steps: 100
+      save_steps: 1000000
+      dataloader_num_workers: 2
+      gradient_accumulation_steps: 1
+      dataloader_pin_memory: true
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "checkpoint-*"
+        - "tfboard"
+      remove_files:
+        - "optimizer.pt"
+        - "scheduler.pt"
+        - "model.pt"
+        - "training_args.bin"
+        - "pytorch_model.bin"
+
+  plateau:
+    script: "BOND/run_ner.py"
+    is_static: true
+    epochs: 10
+    expected_artifacts:
+      - "eval_results.txt"
+      - "test_results.txt"
+    args:
+      do_train: true
+      do_eval: true
+      do_predict: true
+      evaluate_during_training: true
+      overwrite_output_dir: true
+      lr_scheduler: "plateau"
+      logging_steps: 100
+      save_steps: 1000000
+      dataloader_num_workers: 2
+      gradient_accumulation_steps: 1
+      dataloader_pin_memory: true
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "checkpoint-*"
+        - "tfboard"
+      remove_files:
+        - "optimizer.pt"
+        - "scheduler.pt"
+        - "model.pt"
+        - "training_args.bin"
+        - "pytorch_model.bin"
+
+  # -- GP-TS optimizer -------------------------------------------------------
+  gp_ts:
+    script: "GP_TS/gp_ts_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "optimization_results.json"
+      - "final_results.json"
+    args:
+      n_trials: 20
+      random_trials: 20
+      verbose: true
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+  # -- DQN optimizer ---------------------------------------------------------
+  dqn:
+    script: "dqn_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "final_results.json"
+    args:
+      n_trials: 20
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+  # -- TD3 optimizer ---------------------------------------------------------
+  td3:
+    script: "TD3/td3_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "final_results.json"
+    args:
+      n_trials: 20
+      random_trials: 5
+      actor_lr: 0.0003
+      critic_lr: 0.0003
+      discount: 0.99
+      tau: 0.005
+      policy_noise: 0.2
+      noise_clip: 0.5
+      policy_freq: 2
+      replay_buffer_size: 1000
+      td3_batch_size: 16
+      early_stopping: true
+      patience: 10
+      min_delta: 0.001
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+  # -- SAC optimizer ---------------------------------------------------------
+  sac:
+    script: "sac_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "final_results.json"
+    args:
+      n_trials: 50
+      gamma: 0.99
+      tau: 0.005
+      actor_lr: 0.0003
+      critic_lr: 0.0003
+      alpha_lr: 0.0003
+      init_alpha: 0.2
+      buffer_size: 1000
+      batch_size: 64
+      update_after: 10
+      update_every: 5
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+  # -- TRPO optimizer --------------------------------------------------------
+  trpo:
+    script: "trpo_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "final_results.json"
+    args:
+      n_trials: 50
+      random_trials: 10
+      trpo_iters: 10
+      max_kl: 0.01
+      cg_iters: 10
+      damping: 0.1
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+  # -- GRPO optimizer --------------------------------------------------------
+  grpo:
+    script: "grpo_ner_optimizer.py"
+    skip_model: true
+    expected_artifacts:
+      - "final_results.json"
+    args:
+      n_trials: 50
+      random_trials: 10
+      grpo_epochs: 10
+      grpo_batch_size: 4
+      clip_epsilon: 0.2
+      entropy_coeff: 0.01
+      lr: 0.0003
+      verbose: true
+      early_stopping: true
+      patience: 10
+      min_delta: 0.001
+    cleanup:
+      enabled: true
+      remove_dirs:
+        - "trial_*"
+      remove_files: []
+
+# ----- Result aggregation ----------------------------------------------------
+# After all experiments complete, generate a summary JSON.
+summary_file: "results/_summary.json"
+
+# ----- Environment variables -------------------------------------------------
+# Exported before each subprocess call.
+env:
+  PYTHONWARNINGS: "ignore"
+  PYTHONIOENCODING: "utf-8"
+  TORCH_WARNINGS: "none"
+  PYTORCH_CUDA_ALLOC_CONF: ""
+  CUDA_LAUNCH_BLOCKING: "0"
+  TOKENIZERS_PARALLELISM: "false"
