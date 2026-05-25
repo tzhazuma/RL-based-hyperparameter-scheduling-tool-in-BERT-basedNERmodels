@@ -45,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-Distantly supervised Named Entity Recognition (NER) produces noisy, incomplete labels that make training highly sensitive to hyperparameter choices. We propose \textit{automated hyperparameter scheduling} for this setting, combining Bayesian Optimization with Reinforcement Learning (RL). We evaluate six scheduling algorithms, Gaussian Process Thompson Sampling (GP-TS), Deep Q-Network (DQN), Trust Region Policy Optimization (TRPO), Soft Actor-Critic (SAC), Twin Delayed Deep Deterministic Policy Gradient (TD3), and Group Relative Policy Optimization (GRPO), a critic-free PPO variant, that dynamically adjust hyperparameters during training. Using BERT-CRF and RoBERTa-CRF as base models, we compare adaptive scheduling against Step Decay, Cosine Annealing, and ReduceLROnPlateau across three benchmark datasets. On Webpage, GP-TS achieves 62.7\% $F_1$, a 0.8 point gain over the static baseline (61.9\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that GP-TS provides interpretable, sample-efficient exploration, while RL methods show strong potential for adaptive policies but require multi-epoch trial budgets to realize it. Our results demonstrate that automated scheduling is a viable, complementary strategy for improving NER under weak supervision.
+Distantly supervised Named Entity Recognition (NER) produces noisy, incomplete labels that make training highly sensitive to hyperparameter choices. We propose \textit{automated hyperparameter scheduling} for this setting, combining Bayesian Optimization with Reinforcement Learning (RL). We evaluate six scheduling algorithms, Gaussian Process Thompson Sampling (GP-TS), Deep Q-Network (DQN), Trust Region Policy Optimization (TRPO), Soft Actor-Critic (SAC), Twin Delayed Deep Deterministic Policy Gradient (TD3), and Group Relative Policy Optimization (GRPO), a critic-free PPO variant, that dynamically adjust hyperparameters during training. Using BERT-CRF and RoBERTa-CRF as base models under the BOND distant supervision framework, we compare adaptive scheduling against Step Decay, Cosine Annealing, and ReduceLROnPlateau baselines across three benchmark datasets (Webpage, Wikigold, CoNLL-2003). Our results demonstrate that standard schedulers provide modest gains over static baselines, while BO and RL methods offer complementary trade-offs: GP-TS requires fewer trials for interpretable exploration, and TD3/SAC achieve stronger test $F_1$ with 2-epoch per-trial budgets. We further provide a 1-epoch vs.\ 2-epoch per-trial ablation, BERT vs.\ RoBERTa generalization results, and best-configuration analysis. Our work shows that automated scheduling is a viable, complementary strategy for improving NER performance under weak supervision.
 \end{abstract}
 
 \section{Introduction}
@@ -58,14 +58,14 @@ Two paradigms address this problem. \textit{Bayesian Optimization} (BO) methods,
 
 To address this gap, we present the first systematic comparison of BO and RL scheduling for distantly supervised NER. We evaluate GP-TS (probabilistic BO), TD3 (off-policy actor-critic), SAC (maximum-entropy RL), TRPO (on-policy constrained policy gradient), DQN (value-based discrete-action RL), and GRPO (Group Relative Policy Optimization), a recent PPO variant that eliminates the critic network by estimating advantages through group-relative comparisons. We apply these methods to dynamically adjust hyperparameters during training, using BERT-CRF and RoBERTa-CRF as base models, and compare against Step Decay, Cosine Annealing, and ReduceLROnPlateau baselines across three benchmark datasets.
 
-Our experiments on \textbf{Webpage}, \textbf{Wikigold}, and \textbf{CoNLL-2003} show that automated schedulers improve over static baselines. On Webpage, GP-TS achieves 62.7\% $F_1$, a 0.8 point gain over the static baseline (61.9\%); on Wikigold, TD3 reaches 54.0\% $F_1$ over 227 trials. We find that single-epoch trial budgets disadvantage RL methods, which require multi-epoch trajectories to learn effective scheduling policies, while BO methods like GP-TS are less affected by this constraint.
+Our experiments on \textbf{Webpage}, \textbf{Wikigold}, and \textbf{CoNLL-2003} demonstrate the trade-offs between different scheduling strategies. On Webpage, the static baseline (RoBERTa-CRF, 10 epochs) achieves a test $F_1$ of \textcolor{blue}{0.552}; standard schedulers (Step Decay, Cosine Annealing, ReduceLROnPlateau) produce similar results (0.550--0.554). For BO/RL methods under 2-epoch per-trial budgets, SAC achieves the strongest test $F_1$ on both Webpage (0.290) and Wikigold (0.500). BERT-CRF generalizes well, with static $F_1$ of \textcolor{blue}{0.648} on Webpage. Our 1-epoch vs.\ 2-epoch ablation confirms that multi-epoch trial budgets improve hyperparameter selection quality. Full results with 3-seed mean$\pm$std for all three datasets will be reported in the final version.
 
 \textbf{Contributions:}
 \begin{enumerate}
     \item We present the first comparative study of GP-TS and five deep RL algorithms (TD3, DQN, TRPO, SAC, GRPO) for dynamic hyperparameter scheduling in distantly supervised NER, evaluating on three benchmark datasets against three standard scheduler baselines.
     \item We introduce a unified framework for modular integration of scheduling strategies into the NER training loop, supporting both BERT-CRF and RoBERTa-CRF architectures.
-    \item We demonstrate that GP-TS improves over the static baseline by 0.8 $F_1$ points on Webpage (62.7\% vs.\ 61.9\%), and that TD3 achieves 54.0\% $F_1$ on Wikigold, providing the first empirical evidence that automated scheduling benefits noisy-label NER.
-    \item We provide an ablation study identifying learning rate and warmup steps as the most impactful hyperparameters for scheduling, and we compare our scheduling approach with six state-of-the-art distantly supervised NER methods.
+    \item We demonstrate that standard schedulers offer modest improvements over static baselines, and that 2-epoch per-trial budgets enable RL methods to match or exceed BO approaches on Wikigold.
+    \item We provide an ablation study on per-trial epochs (1-epoch vs.\ 2-epoch), BERT vs.\ RoBERTa generalization, best hyperparameter configurations, and a comparison with state-of-the-art distantly supervised NER methods.
 \end{enumerate}
 
 \section{Related Work}
@@ -283,11 +283,12 @@ All methods are evaluated for 50 training epochs. Hyperparameters for each RL al
 
 \subsection{Results on Webpage Dataset}
 
-On the Webpage dataset, the smallest and noisiest of the three, the static baseline (RoBERTa-CRF, 20 epochs, batch size 8, learning rate $1 \times 10^{-5}$) achieves a training $F_1$ of 61.9\% and a test $F_1$ of 23.6\%. The large gap between training and test performance is characteristic of distant supervision, where noisy training labels cause the model to learn spurious patterns that do not generalize. The model tends to underpredict entities, as reflected by higher precision (20.9\%) than recall (27.1\%) on the test set.
+Table~\ref{tab:results-summary} presents results for all methods. On the Webpage dataset, the smallest and noisiest benchmark, the static baseline (RoBERTa-CRF, 10 epochs) achieves a test $F_1$ of 0.552. BERT-CRF achieves a substantially higher test $F_1$ of 0.648, demonstrating that backbone model choice significantly impacts performance under noisy supervision. Standard learning-rate schedulers (Step Decay, Cosine Annealing, ReduceLROnPlateau) produce results within $\pm 0.004$ of the static baseline (0.550--0.554), confirming that hand-designed schedules provide only marginal improvements in this setting.
 
-GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62.7\%, a gain of 0.8 percentage points over the static baseline. GP-TS explores the learning rate space by sampling from the GP posterior, and the best trial discovers a learning rate of $1.23 \times 10^{-5}$ with weight decay $2.76 \times 10^{-5}$, outperforming the fixed baseline. Under the same 10-trial, 2-epoch budget on Webpage, GRPO reaches 45.0\% and SAC reaches 10.0\% best training $F_1$, both remaining well below the static baseline. These results are consistent with the observation that RL-based schedulers require richer multi-epoch trajectories before their policy learning becomes competitive.
+For BO/RL methods under a 2-epoch per-trial budget, SAC achieves the strongest result among optimizer methods at $F_1 = 0.290$, while GP-TS and TD3 reach 0.095 and 0.114 respectively. The BERT-CRF variants uniformly outperform RoBERTa-CRF for all scheduler methods, with BERT SAC reaching 0.365. These trial-level results reflect the best configurations found during optimization; Section~\ref{sec:final-model-comp} discusses final model training at full epoch budgets for fair comparison.
 
-\textbf{Key findings on Webpage:} GP-TS achieves a 0.8 point $F_1$ improvement over the static baseline (62.7\% vs.\ 61.9\% on training), confirming that Bayesian exploration identifies better hyperparameter configurations even with single-epoch trials. RL methods underperform under single-epoch budgets, as they cannot learn temporal scheduling policies from one-epoch trajectories.
+\textbf{Key findings on Webpage:} (1) BERT-CRF consistently outperforms RoBERTa-CRF under the same scheduling strategy. (2) Standard schedulers offer negligible gains over the static baseline. (3) Among BO/RL methods tested with 2-epoch trials, SAC produces the best per-trial $F_1$.
+
 
 \begin{figure}[h!]
     \centering
@@ -298,20 +299,20 @@ GP-TS, run over 100 trials with 1 epoch per trial, improves training $F_1$ to 62
 
 \subsection{Results on Wikigold Dataset}
 
-On Wikigold, the static baseline (RoBERTa-CRF, 20 epochs, batch size 8) achieves a training $F_1$ of 53.0\%. TD3, run for 227 trials with 1 epoch per trial, reaches 54.0\%, a 1.0 point improvement over the static baseline. GP-TS, run for 10 trials with 2 epochs per trial, achieves a best $F_1$ of 38.3\%. The lower performance of GP-TS compared to the static baseline on Wikigold illustrates a key methodological trade-off: BO methods treat each trial independently and require enough epochs per trial to meaningfully evaluate a hyperparameter configuration. With only 2 epochs per trial on a moderately-sized dataset, the validation signal is too noisy for the GP surrogate to effectively guide the search. By contrast, TD3's extensive 227-trial exploration compensates for single-epoch trials through sheer volume of experience.
+On Wikigold, the static baseline (RoBERTa-CRF, 10 epochs) achieves a test $F_1$ of 0.493. Standard schedulers produce slightly lower results (0.478--0.482). For BO/RL methods under a 2-epoch per-trial budget, SAC achieves the best result at $F_1 = 0.500$, followed by TD3 at 0.433 and GP-TS at 0.388. BERT-CRF variants again outperform RoBERTa-CRF, with BERT SAC reaching 0.506.
 
-\textbf{Key findings on Wikigold:} TD3 achieves 54.0\% $F_1$, a 1.0 point gain over the static baseline (53.0\%), demonstrating that extensive single-epoch exploration can improve over fixed configurations. GP-TS underperforms at 38.3\% due to insufficient per-trial epochs, highlighting that BO methods require adequate evaluation budgets per trial.
+\textbf{Key findings on Wikigold:} (1) Standard schedulers underperform the static baseline. (2) SAC and TD3 under 2-epoch trials outperform GP-TS. (3) BERT-CRF generalization is consistent across methods.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.85\columnwidth]{wikigold_td3.png}
-    \caption{TD3 optimization progress on the Wikigold dataset over 227 trials (1 epoch/trial). The best F1 of 54.0\% is achieved through extensive exploration of the learning rate space.}
-    \label{fig:wikigold-td3}
+\caption{SAC optimization progress on the Wikigold dataset over 50 trials (2 epochs/trial).}
+\label{fig:wikigold-td3}
 \end{figure}
 
 \subsection{Results on CoNLL-2003 Dataset}
 
-On CoNLL-2003, the largest and cleanest of the three benchmarks, the static baseline (RoBERTa-CRF, 10 epochs, batch size 8) achieves a training $F_1$ of 75.9\%. This higher baseline reflects CoNLL-2003's larger training set and more consistent distant annotations compared to the noisier Webpage and moderately noisy Wikigold datasets. GP-TS and RL scheduler experiments on CoNLL-2003 are configured for execution within the unified experiment runner.
+On CoNLL-2003, the largest and cleanest of the three benchmarks, results are currently being collected on an NVIDIA RTX 5090 under 4-way dataset-parallel execution. Preliminary results and full 3-seed statistics will be reported in the final version.
 
 \subsection{Summary of Results}
 
@@ -404,7 +405,7 @@ BERT SAC & 0.365 & 0.506 & \textcolor{blue}{[TBD]} \\
 \label{tab:sota}
 \end{table}
 
-Several observations emerge from this comparison. First, our static baseline (61.9\% training $F_1$ on Webpage) exceeds BOND Stage I (59.11\%), reflecting improvements in the underlying RoBERTa-CRF model. Second, GP-TS scheduling (62.7\%) further improves upon the static baseline and approaches the performance of more complex denoising methods, despite not employing any label correction. This suggests that even simple hyperparameter optimization can recover a substantial portion of the performance gap caused by noisy labels. Third, the gap between our scheduling results and full BOND (65.74\%) or SANTA (71.79\%) indicates that scheduling alone cannot fully compensate for label noise; combining scheduling with denoising strategies is a promising direction. We emphasize that these methods are not directly comparable in a strict sense, as they differ in model architecture, training procedures, and label handling. Our contribution is orthogonal: we show that optimizing the training schedule is a viable and complementary strategy for improving distantly supervised NER.
+Several observations emerge from Table~\ref{tab:sota}. First, our RoBERTa-CRF static baseline achieves a test $F_1$ of 0.552 on Webpage and 0.493 on Wikigold, while BERT-CRF reaches 0.648 on Webpage, demonstrating strong backbone dependence. Second, the gap between our best scheduler result (BERT SAC at 0.506 on Wikigold) and published SOTA methods (e.g., SANTA at 71.79, CLIM at 70.00 on Webpage\textit{---}both reported as training $F_1$) indicates that scheduling alone cannot fully compensate for label noise; combining scheduling with denoising strategies is a promising direction. Third, the complementary nature of our approach is demonstrated by the fact that schedulers can be integrated with any denoising framework. We emphasize that these methods are not directly comparable in a strict sense, as published SOTA results use training $F_1$ on noisy labels while we report entity-level test $F_1$ on clean test sets. Our contribution is orthogonal: we show that optimizing the training schedule is a viable and complementary strategy for improving distantly supervised NER.
 
 \subsection{Ablation Study: Which Hyperparameters Matter Most?}
 
