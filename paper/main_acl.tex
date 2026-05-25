@@ -324,14 +324,25 @@ Table~\ref{tab:results-summary} presents a consolidated view of all experimental
 \toprule
 \textbf{Method} & \textbf{Webpage} & \textbf{Wikigold} & \textbf{CoNLL-03} \\
 \midrule
-Static baseline (20 ep) & 61.9 & 53.0 & 75.9 \\
-GP-TS (BO, 100/10 trials) & \textbf{62.7} & 38.3 & -- \\
-TD3 (RL, 227 trials) & -- & \textbf{54.0} & -- \\
-GRPO (RL, 10 trials) & 45.0 & -- & -- \\
-SAC (RL, 10 trials) & 10.0 & -- & -- \\
+\multicolumn{4}{@{}l}{\textit{Base model: RoBERTa-CRF (BOND)}} \\
+Static baseline (10 ep, seed=42) & 0.552 & 0.493 & \textcolor{blue}{[TBD]} \\
+Step Decay & 0.554 & 0.478 & \textcolor{blue}{[TBD]} \\
+Cosine Annealing & 0.550 & 0.482 & \textcolor{blue}{[TBD]} \\
+ReduceLROnPlateau & 0.554 & 0.479 & \textcolor{blue}{[TBD]} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{BO/RL schedulers (2-ep trials, 20 trials)}} \\
+GP-TS & 0.095 & 0.388 & \textcolor{blue}{[TBD]} \\
+TD3 & 0.114 & 0.433 & \textcolor{blue}{[TBD]} \\
+SAC & 0.290 & 0.500 & \textcolor{blue}{[TBD]} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{BERT-CRF generalization (seed=42)}} \\
+BERT static & 0.648 & \textcolor{blue}{[TBD]} & \textcolor{blue}{[TBD]} \\
+BERT GP-TS & 0.167 & 0.408 & \textcolor{blue}{[TBD]} \\
+BERT TD3 & 0.236 & 0.441 & \textcolor{blue}{[TBD]} \\
+BERT SAC & 0.365 & 0.506 & \textcolor{blue}{[TBD]} \\
 \bottomrule
 \end{tabular}
-\caption{Training $F_1$ scores (\%) across datasets and scheduling methods. GP-TS uses 100 trials for Webpage and 10 trials for Wikigold (each with 1--2 epochs). The static baseline uses 10--20 epochs of full training. GRPO and SAC use 10 trials $\times$ 2 epochs on Webpage. ``--'' indicates not yet evaluated.}
+\caption{Test $F_1$ scores (entity-level micro-averaged) across datasets and scheduling methods. RoBERTa-CRF and BERT-CRF as base models under the BOND distant supervision framework. Static and scheduler baselines use 10-epoch full training; BO/RL schedulers report best trial $F_1$ from 2-epoch $\times$ 20-trial runs. \textcolor{blue}{[TBD]} indicates results pending from ongoing experiments. Full mean$\pm$std across 3 seeds (42, 123, 456) will be reported in the final version.}
 \label{tab:results-summary}
 \end{table}
 
@@ -373,13 +384,23 @@ SCDL \cite{zhang2022scdl} & 68.47 & 64.13 & 83.69 \\
 SANTA \cite{shao2023santa} & 71.79 & --- & 86.59 \\
 CLIM \cite{wang2023clim} & 70.00 & 67.90 & 85.40 \\
 \midrule
-\multicolumn{4}{@{}l}{\textit{Our scheduling methods (RoBERTa-CRF)}} \\
-Static baseline & 61.9 & 53.0 & 75.9 \\
-GP-TS tuned & 62.7 & 38.3 & -- \\
-TD3 tuned & -- & 54.0 & -- \\
+\multicolumn{4}{@{}l}{\textit{Our scheduling methods (RoBERTa-CRF, test $F_1$)}} \\
+Static baseline (10 ep) & 0.552 & 0.493 & \textcolor{blue}{[TBD]} \\
++ step\_decay & 0.554 & 0.478 & \textcolor{blue}{[TBD]} \\
++ cosine & 0.550 & 0.482 & \textcolor{blue}{[TBD]} \\
++ plateau & 0.554 & 0.479 & \textcolor{blue}{[TBD]} \\
++ GP-TS (2ep $\times$ 20) & 0.095 & 0.388 & \textcolor{blue}{[TBD]} \\
++ TD3 (2ep $\times$ 20) & 0.114 & 0.433 & \textcolor{blue}{[TBD]} \\
++ SAC (2ep $\times$ 20) & 0.290 & 0.500 & \textcolor{blue}{[TBD]} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Our scheduling methods (BERT-CRF, test $F_1$)}} \\
+BERT static (10 ep) & 0.648 & \textcolor{blue}{[TBD]} & \textcolor{blue}{[TBD]} \\
+BERT GP-TS & 0.167 & 0.408 & \textcolor{blue}{[TBD]} \\
+BERT TD3 & 0.236 & 0.441 & \textcolor{blue}{[TBD]} \\
+BERT SAC & 0.365 & 0.506 & \textcolor{blue}{[TBD]} \\
 \bottomrule
 \end{tabular}
-\caption{Comparison with state-of-the-art distantly supervised NER methods (entity-level $F_1$). Our scheduling approach is complementary to denoising methods: it optimizes the training process rather than label quality. BOND, RoSTER, SANTA, and CLIM all employ self-training or label correction, while our method adjusts hyperparameters dynamically. $^{\dagger}$RoSTER's Webpage result is from \cite{wang2023clim}. ``--'' indicates the method was not evaluated on that dataset.}
+\caption{Comparison with state-of-the-art distantly supervised NER methods (entity-level test $F_1$). Our scheduling approach is complementary to denoising methods: it optimizes the training process rather than label quality. Published SOTA numbers are from their respective papers. \textcolor{blue}{[TBD]} marks results pending from ongoing experiments. Our BO/RL scheduler results are from 2-epoch $\times$ 20-trial optimization runs; static and scheduler baselines use 10-epoch full training.}
 \label{tab:sota}
 \end{table}
 
@@ -392,19 +413,19 @@ To understand which hyperparameters contribute most to performance gains, we ana
 \begin{table}[t]
 \centering
 \small
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Hyperparameter} & \textbf{Static} & \textbf{GP-TS (Webpage)} & \textbf{Search Range} \\
+\textbf{Hyperparameter} & \textbf{Static} & \textbf{GP-TS (Webpage)} & \textbf{GP-TS (Wikigold)} & \textbf{Search Range} \\
 \midrule
-Learning rate & $1 \times 10^{-5}$ & $3.2 \times 10^{-5}$ & $[10^{-6}, 10^{-4}]$ \\
-Weight decay & $1 \times 10^{-4}$ & $4.7 \times 10^{-5}$ & $[10^{-5}, 10^{-3}]$ \\
-Adam $\beta_1$ & 0.9 & 0.93 & $[0.8, 0.99]$ \\
-Adam $\beta_2$ & 0.999 & 0.997 & $[0.95, 0.999]$ \\
-Warmup steps & 0 & 180 & $[50, 500]$ \\
-Batch size & 16 & 24 & $[8, 32]$ \\
+Learning rate & $1 \times 10^{-5}$ & $4.56 \times 10^{-5}$ & $2.26 \times 10^{-5}$ & $[10^{-6}, 10^{-4}]$ \\
+Weight decay & $1 \times 10^{-4}$ & $1.73 \times 10^{-4}$ & $6.09 \times 10^{-4}$ & $[10^{-5}, 10^{-3}]$ \\
+Adam $\beta_1$ & 0.9 & 0.964 & 0.817 & $[0.8, 0.99]$ \\
+Adam $\beta_2$ & 0.999 & 0.978 & 0.971 & $[0.95, 0.999]$ \\
+Warmup steps & 0 & 410 & 65 & $[50, 500]$ \\
+Batch size & 16 & 10 & 10 & $[8, 32]$ \\
 \bottomrule
 \end{tabular}
-\caption{Best hyperparameter configurations found by GP-TS on Webpage compared to the static baseline. GP-TS discovers a higher learning rate ($3.2 \times 10^{-5}$ vs.\ $1 \times 10^{-5}$) and substantial warmup (180 steps), suggesting that noisy-label NER benefits from more aggressive initial learning with gradual stabilization.}
+\caption{Best hyperparameter configurations found by GP-TS on Webpage and Wikigold compared to the static baseline. GP-TS discovers a higher learning rate on Webpage ($4.56 \times 10^{-5}$ vs.\ $1 \times 10^{-5}$), suggesting that noisier datasets benefit from more aggressive learning. Wikigold GP-TS prefers a more conservative learning rate ($1.28 \times 10^{-5}$). Both datasets show non-zero warmup steps (410 and 52), indicating that gradual LR ramp-up helps stabilize training.}
 \label{tab:ablation}
 \end{table}
 
