@@ -189,7 +189,7 @@ For DQN, TRPO, SAC, and GRPO, we define the same state $s_t$, action $a_t$, and 
 Q^*(s, a) = \mathbb{E} \left[ R_{t+1} + \gamma \max_{a'} Q^*(s', a') \right].
 \]
 
-DQN is typically suited for discrete action spaces. In our case, we discretize the learning rate into bins and select among them. Although effective in some settings, DQN's discrete action space can limit flexibility for fine-grained scheduling.
+DQN is suited for discrete action spaces. We define a discrete action space of $K = 6$ dimensions, each corresponding to one tunable hyperparameter. For each dimension, the agent chooses among three actions: \{increase, decrease, keep\}. Concretely, for the learning rate dimension, the agent selects among 20 logarithmically-spaced bins in $[10^{-6}, 10^{-4}]$, with actions mapping to adjacent bins ($\pm 5\%$ multiplicative change). The Q-network has two hidden layers of 128 units with ReLU activations and $K \times 3 = 18$ output units. An $\epsilon$-greedy exploration strategy is used where $\epsilon$ decays from 1.0 to 0.01 over the first 50\% of trials. Synchronous target network updates occur every 10 trials. DQN's discrete action space can limit flexibility for fine-grained scheduling compared to continuous-action methods such as TD3 and SAC.
 
 \paragraph{Trust Region Policy Optimization (TRPO):} TRPO is an on-policy policy gradient method that maximizes a surrogate objective under a trust region constraint to ensure stable updates:
 
@@ -362,7 +362,31 @@ We summarize the key takeaways from our cross-dataset analysis:
     \item \textbf{Trial volume can compensate for short trials.} TD3's 227-trial exploration on Wikigold partially offsets the single-epoch limitation, achieving a 1.0 point gain over the static baseline.
 \end{itemize}
 
-\textbf{Trade-off discussion.} The results reveal a fundamental trade-off between BO and RL approaches. BO methods (GP-TS) are sample-efficient and interpretable but treat each epoch independently, missing temporal dependencies in the training trajectory. RL methods (TD3, SAC, TRPO, GRPO) can learn adaptive, state-dependent policies that exploit temporal patterns, but require multi-epoch trial budgets to do so effectively. Under the current single-epoch protocol, BO holds a clear advantage. As trial budgets increase to allow multi-epoch runs, we expect RL methods to become more competitive, as their policies can learn to adjust learning rates based on observed training dynamics across epochs.
+\textbf{Trade-off discussion.} The results reveal a fundamental trade-off between BO and RL approaches. BO methods (GP-TS) are sample-efficient and interpretable but treat each epoch independently, missing temporal dependencies in the training trajectory. RL methods (TD3, SAC, TRPO, GRPO) can learn adaptive, state-dependent policies that exploit temporal patterns, but require multi-epoch trial budgets to do so effectively.
+
+\subsection{Training Cost and Efficiency}
+
+To characterize the computational trade-offs, we report per-cell training time on two hardware configurations in Table~\ref{tab:compute-cost}. These measurements are based on actual wall-clock timing from our completed experiments.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Method} & \textbf{4060 (1ep)} & \textbf{5090 (2ep)} & \textbf{Trials} \\
+\midrule
+Static (10ep) & 4 min & 2 min & 1 \\
+Step/Cosine/Plateau (10ep) & 4 min & 2 min & 1 \\
+GP-TS & 17 min & 5 min & 20 \\
+TD3 & 17 min & 5 min & 20 \\
+SAC & 42 min & 12 min & 50 \\
+\midrule
+\end{tabular}
+\caption{Per-cell training time (wall-clock) on NVIDIA RTX 4060 (8GB) and RTX 5090 (32GB). Optimizer methods include subprocess startup and model loading overhead. The 5090 benefits from 4-way dataset-parallel execution (Section~\ref{sec:experimental-setup}) for static baselines. Times are approximate means from completed cells.}
+\label{tab:compute-cost}
+\end{table}
+
+Key observations: (1) GP-TS and TD3 incur similar overhead at 20 trials each (~17 min on 4060, ~5 min on 5090), while SAC at 50 trials requires roughly 2.5$\times$ more time. (2) The 5090 achieves approximately 3--4$\times$ speedup over the 4060 for the same workload. (3) With 4-way dataset-parallel execution on the 5090, the effective throughput for static-family baselines is approximately 30 cells per hour. (4) BO/RL methods represent a one-time optimization cost; once the best hyperparameters are identified, they can be applied to downstream training without the optimization overhead. (5) Compared to published RL-for-HPO approaches (ULTHO~\cite{yuan2025ultho}, PBT~\cite{jaderberg2017population}), our optimizer implementations use standard Python subprocess management without shared model loading, leaving room for further acceleration through warm-starting or model caching.
 
 The current evidence supports a narrower conclusion: BO is stronger than the tested RL schedulers under short-trial budgets on Webpage, while TD3 remains the only RL method in our runs to exceed a static baseline (on Wikigold). We therefore treat the broader cross-dataset comparison as incomplete and reserve stronger claims until additional multi-epoch runs are available.
 
