@@ -20,10 +20,6 @@ models:
   - bert-base-cased
 
 schedulers:
-  - static
-  - step_decay
-  - cosine
-  - plateau
   - gp_ts
   - td3
   - sac
