@@ -53,7 +53,7 @@ dataset_dirs:
   twitter: "twitter_distant"
 
 # ----- Execution parameters --------------------------------------------------
-timeout_seconds: 14400       # 4 hours per experiment
+timeout_seconds: 28800       # 8 hours per experiment (conll03 needs more)
 n_epochs: 2
 max_seq_length: 128
 cache_dir_rel: "BOND/pretrained_model"
