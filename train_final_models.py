@@ -3,8 +3,8 @@
 import json, os, subprocess, sys, re
 from pathlib import Path
 
-REPO = os.environ.get("REPO_ROOT", "/home/azuma/aclpaper/repo")
-VENV_PY = os.environ.get("VENV_PY", "/home/azuma/venv314/bin/python")
+REPO = os.environ.get("REPO_ROOT", ".")
+VENV_PY = os.environ.get("VENV_PY", "python3")
 BOND_RUN = f"{REPO}/BOND/run_ner.py"
 RESULTS = f"{REPO}/results"
 CACHE = f"{REPO}/BOND/pretrained_model"

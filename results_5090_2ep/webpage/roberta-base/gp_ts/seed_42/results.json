@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "elapsed_seconds": 226.7,
+  "returncode": 0,
+  "command": "/root/miniconda3/bin/python /root/autodl-tmp/aclpaper/GP_TS/gp_ts_ner_optimizer.py --data_dir /root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant --output_dir /root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/gp_ts/seed_42 --model_type roberta --model_name roberta-base --n_epochs 2 --max_seq_length 128 --cache_dir /root/autodl-tmp/aclpaper/BOND/pretrained_model --seed 42 --run_ner_path /root/autodl-tmp/aclpaper/BOND/run_ner.py --skip_model_saving --n_trials 20 --random_trials 20 --verbose",
+  "expected_artifacts": [
+    "optimization_results.json",
+    "final_results.json"
+  ],
+  "cleanup_removed": []
+}

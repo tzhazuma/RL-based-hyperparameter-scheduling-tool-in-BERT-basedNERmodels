@@ -1,0 +1,19 @@
+{
+  "status": "success",
+  "elapsed_seconds": 348.0,
+  "returncode": 0,
+  "command": "/root/miniconda3/bin/python /root/autodl-tmp/aclpaper/TD3/td3_ner_optimizer.py --data_dir /root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant --output_dir /root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123 --model_type roberta --model_name roberta-base --n_epochs 2 --max_seq_length 128 --cache_dir /root/autodl-tmp/aclpaper/BOND/pretrained_model --seed 123 --run_ner_path /root/autodl-tmp/aclpaper/BOND/run_ner.py --skip_model_saving --n_trials 20 --random_trials 5 --actor_lr 0.0003 --critic_lr 0.0003 --discount 0.99 --tau 0.005 --policy_noise 0.2 --noise_clip 0.5 --policy_freq 2 --replay_buffer_size 1000 --td3_batch_size 16 --early_stopping --patience 10 --min_delta 0.001",
+  "expected_artifacts": [
+    "final_results.json"
+  ],
+  "cleanup_removed": [
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_9",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_8",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_7",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_14",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_13",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_12",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_11",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/roberta-base/td3/seed_123/trial_10"
+  ]
+}

@@ -1,0 +1,322 @@
+[
+  {
+    "f1": 0.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.900437523873714e-05,
+      "weight_decay": 1.1220740288380033e-05,
+      "adam_beta1": 0.8522555704901327,
+      "adam_beta2": 0.9609373261692923,
+      "warmup_steps": 427,
+      "train_batch": 11
+    },
+    "trial": 1,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.2357142857142857,
+    "precision": 0.25,
+    "recall": 0.22297297297297297,
+    "status": "success",
+    "config": {
+      "learning_rate": 2.256311073588911e-05,
+      "weight_decay": 0.0006086381003274661,
+      "adam_beta1": 0.8165183781995891,
+      "adam_beta2": 0.9706741691645783,
+      "warmup_steps": 65,
+      "train_batch": 10
+    },
+    "trial": 2,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.028169014084507043,
+    "precision": 0.016357688113413305,
+    "recall": 0.10135135135135136,
+    "status": "success",
+    "config": {
+      "learning_rate": 2.737007261357746e-06,
+      "weight_decay": 0.0001024968636013488,
+      "adam_beta1": 0.8050418342399341,
+      "adam_beta2": 0.9597430448836457,
+      "warmup_steps": 382,
+      "train_batch": 30
+    },
+    "trial": 3,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.2299372681604002e-05,
+      "weight_decay": 2.7598230915285763e-05,
+      "adam_beta1": 0.9119604799364227,
+      "adam_beta2": 0.9896620923772135,
+      "warmup_steps": 53,
+      "train_batch": 32
+    },
+    "trial": 4,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.016129032258064516,
+    "precision": 0.02,
+    "recall": 0.013513513513513514,
+    "status": "success",
+    "config": {
+      "learning_rate": 4.0892014268894145e-05,
+      "weight_decay": 0.00024904555224040015,
+      "adam_beta1": 0.8646475981384185,
+      "adam_beta2": 0.9576184954907773,
+      "warmup_steps": 440,
+      "train_batch": 18
+    },
+    "trial": 5,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.016103059581320453,
+    "precision": 0.010570824524312896,
+    "recall": 0.033783783783783786,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.3436805443052967e-05,
+      "weight_decay": 8.430138675600838e-05,
+      "adam_beta1": 0.8921965164194808,
+      "adam_beta2": 0.9801433521297422,
+      "warmup_steps": 277,
+      "train_batch": 23
+    },
+    "trial": 6,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.006920415224913494,
+    "precision": 0.0070921985815602835,
+    "recall": 0.006756756756756757,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.8131112724578078e-05,
+      "weight_decay": 9.310532811869673e-05,
+      "adam_beta1": 0.8849439895031851,
+      "adam_beta2": 0.9767908190121244,
+      "warmup_steps": 274,
+      "train_batch": 22
+    },
+    "trial": 7,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.025356576862123618,
+    "precision": 0.016563146997929608,
+    "recall": 0.05405405405405406,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.329436398946386e-05,
+      "weight_decay": 5.103482015064006e-05,
+      "adam_beta1": 0.8729059007880647,
+      "adam_beta2": 0.9742318953375461,
+      "warmup_steps": 260,
+      "train_batch": 23
+    },
+    "trial": 8,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.0202006012352969e-05,
+      "weight_decay": 5.777947094267909e-05,
+      "adam_beta1": 0.9035874183043924,
+      "adam_beta2": 0.9749513437106125,
+      "warmup_steps": 285,
+      "train_batch": 21
+    },
+    "trial": 9,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.013133208255159476,
+    "precision": 0.007625272331154684,
+    "recall": 0.0472972972972973,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.1016047004368436e-05,
+      "weight_decay": 8.227016436752374e-05,
+      "adam_beta1": 0.8767585507587341,
+      "adam_beta2": 0.9764907697615722,
+      "warmup_steps": 273,
+      "train_batch": 22
+    },
+    "trial": 10,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.006980802792321116,
+    "precision": 0.004705882352941176,
+    "recall": 0.013513513513513514,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.076328716094016e-05,
+      "weight_decay": 0.00012097603620088542,
+      "adam_beta1": 0.8890680993164555,
+      "adam_beta2": 0.9729398824663846,
+      "warmup_steps": 303,
+      "train_batch": 21
+    },
+    "trial": 11,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.010695187165775402,
+    "precision": 0.0063532401524777635,
+    "recall": 0.033783783783783786,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.3730308754729036e-05,
+      "weight_decay": 7.799392941769643e-05,
+      "adam_beta1": 0.8936876339714036,
+      "adam_beta2": 0.9794999811325815,
+      "warmup_steps": 279,
+      "train_batch": 23
+    },
+    "trial": 12,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.032128514056224904,
+    "precision": 0.022857142857142857,
+    "recall": 0.05405405405405406,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.8179607643783235e-05,
+      "weight_decay": 9.346095414663855e-05,
+      "adam_beta1": 0.8847787527432542,
+      "adam_beta2": 0.9768096140721182,
+      "warmup_steps": 274,
+      "train_batch": 22
+    },
+    "trial": 13,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.00893854748603352,
+    "precision": 0.00535475234270415,
+    "recall": 0.02702702702702703,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.3293014095481922e-05,
+      "weight_decay": 5.102961449843734e-05,
+      "adam_beta1": 0.8729173937742968,
+      "adam_beta2": 0.9742326295103075,
+      "warmup_steps": 260,
+      "train_batch": 23
+    },
+    "trial": 14,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.030581039755351685,
+    "precision": 0.019762845849802372,
+    "recall": 0.06756756756756757,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.02020753210991e-05,
+      "weight_decay": 5.777934009898227e-05,
+      "adam_beta1": 0.9035867607534018,
+      "adam_beta2": 0.9749513126789443,
+      "warmup_steps": 285,
+      "train_batch": 21
+    },
+    "trial": 15,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.0239880059970015,
+    "precision": 0.015414258188824663,
+    "recall": 0.05405405405405406,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.101604813828959e-05,
+      "weight_decay": 8.22701897726141e-05,
+      "adam_beta1": 0.8767585797787456,
+      "adam_beta2": 0.976490770035381,
+      "warmup_steps": 273,
+      "train_batch": 22
+    },
+    "trial": 16,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.005174644243208279,
+    "precision": 0.0032,
+    "recall": 0.013513513513513514,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.076328716094016e-05,
+      "weight_decay": 0.00012097603827630144,
+      "adam_beta1": 0.8890680982547478,
+      "adam_beta2": 0.9729398827401935,
+      "warmup_steps": 303,
+      "train_batch": 21
+    },
+    "trial": 17,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.014947683109118086,
+    "precision": 0.009596928982725527,
+    "recall": 0.033783783783783786,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.2849766843964845e-05,
+      "weight_decay": 5.12767178519275e-05,
+      "adam_beta1": 0.8749168253949119,
+      "adam_beta2": 0.9762508680122612,
+      "warmup_steps": 301,
+      "train_batch": 23
+    },
+    "trial": 18,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.015887025595763462,
+    "precision": 0.009137055837563452,
+    "recall": 0.060810810810810814,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.21552177939617e-05,
+      "weight_decay": 7.471035236970195e-05,
+      "adam_beta1": 0.8751146765069742,
+      "adam_beta2": 0.973800694983799,
+      "warmup_steps": 274,
+      "train_batch": 24
+    },
+    "trial": 19,
+    "used_gpu": true
+  },
+  {
+    "f1": 0.004357298474945534,
+    "precision": 0.003215434083601286,
+    "recall": 0.006756756756756757,
+    "status": "success",
+    "config": {
+      "learning_rate": 1.357787532181266e-05,
+      "weight_decay": 5.3054667469312166e-05,
+      "adam_beta1": 0.8924686749354542,
+      "adam_beta2": 0.9746114845761075,
+      "warmup_steps": 267,
+      "train_batch": 24
+    },
+    "trial": 20,
+    "used_gpu": true
+  }
+]

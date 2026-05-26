@@ -1,0 +1,12 @@
+{
+  "best_config": {
+    "learning_rate": 9.94757862630522e-05,
+    "weight_decay": 6.593212930512388e-05,
+    "adam_beta1": 0.9281230390071868,
+    "adam_beta2": 0.9733079896569252,
+    "warmup_steps": 132,
+    "train_batch": 9
+  },
+  "best_f1": 0.5736434108527131,
+  "best_trial": 17
+}

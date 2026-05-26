@@ -1,0 +1,18 @@
+[
+  {
+    "f1": 0.710758552305404,
+    "precision": 0.8061178587494376,
+    "recall": 0.6355736832771768,
+    "status": "success",
+    "config": {
+      "learning_rate": 3.1362095414272514e-05,
+      "weight_decay": 0.0008573825043178673,
+      "adam_beta1": 0.8826897711620908,
+      "adam_beta2": 0.9889206892444629,
+      "warmup_steps": 381,
+      "train_batch": 9
+    },
+    "trial": 0,
+    "used_gpu": true
+  }
+]

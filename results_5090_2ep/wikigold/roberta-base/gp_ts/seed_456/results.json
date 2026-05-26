@@ -1,0 +1,32 @@
+{
+  "status": "success",
+  "elapsed_seconds": 1397.3,
+  "returncode": 0,
+  "command": "/root/miniconda3/bin/python /root/autodl-tmp/aclpaper/GP_TS/gp_ts_ner_optimizer.py --data_dir /root/autodl-tmp/aclpaper/BOND/dataset/wikigold_distant --output_dir /root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456 --model_type roberta --model_name roberta-base --n_epochs 2 --max_seq_length 128 --cache_dir /root/autodl-tmp/aclpaper/BOND/pretrained_model --seed 456 --run_ner_path /root/autodl-tmp/aclpaper/BOND/run_ner.py --skip_model_saving --n_trials 20 --random_trials 20 --verbose",
+  "expected_artifacts": [
+    "optimization_results.json",
+    "final_results.json"
+  ],
+  "cleanup_removed": [
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_9",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_8",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_7",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_6",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_5",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_4",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_3",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_2",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_19",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_18",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_17",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_16",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_15",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_14",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_13",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_12",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_11",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_10",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_1",
+    "/root/autodl-tmp/aclpaper/results_2ep/wikigold/roberta-base/gp_ts/seed_456/trial_0"
+  ]
+}

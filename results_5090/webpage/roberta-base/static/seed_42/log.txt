@@ -1,0 +1,49 @@
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=42, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 385
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 490
+***** Entropy loss: 0.4631, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42/checkpoint-best
+***** Entropy loss: 0.0187, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0125, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=42, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 385
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 490
+***** Entropy loss: 0.4631, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42/checkpoint-best
+***** Entropy loss: 0.0187, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0125, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0465, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+ global_step = 490, average loss = 0.1959878091499024
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=42, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 385
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 490
+***** Entropy loss: 0.4631, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42/checkpoint-best
+***** Entropy loss: 0.0187, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0125, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0465, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+ global_step = 490, average loss = 0.1959878091499024
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42
+Evaluate the following checkpoints: ['/root/autodl-tmp/aclpaper/results/webpage/roberta-base/static/seed_42']

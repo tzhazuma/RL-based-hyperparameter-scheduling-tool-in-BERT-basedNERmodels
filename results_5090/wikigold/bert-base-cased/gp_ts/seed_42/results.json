@@ -1,0 +1,24 @@
+{
+  "status": "success",
+  "elapsed_seconds": 932.4,
+  "returncode": 0,
+  "command": "/root/miniconda3/bin/python /root/autodl-tmp/aclpaper/GP_TS/gp_ts_ner_optimizer.py --data_dir /root/autodl-tmp/aclpaper/BOND/dataset/wikigold_distant --output_dir /root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42 --model_type bert --model_name bert-base-cased --n_epochs 2 --max_seq_length 128 --cache_dir /root/autodl-tmp/aclpaper/BOND/pretrained_model --seed 42 --run_ner_path /root/autodl-tmp/aclpaper/BOND/run_ner.py --skip_model_saving --n_trials 20 --random_trials 20 --verbose",
+  "expected_artifacts": [
+    "optimization_results.json",
+    "final_results.json"
+  ],
+  "cleanup_removed": [
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_9",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_8",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_19",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_18",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_17",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_16",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_15",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_14",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_13",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_12",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_11",
+    "/root/autodl-tmp/aclpaper/results/wikigold/bert-base-cased/gp_ts/seed_42/trial_10"
+  ]
+}

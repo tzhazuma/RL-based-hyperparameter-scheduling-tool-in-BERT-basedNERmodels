@@ -1,0 +1,81 @@
+GP-TS NER Hyperparameter Optimization
+Started at: 2026-05-25 21:51:32
+Total trials: 20, Random trials: 20
+Model: roberta (roberta-base)
+--------------------------------------------------
+
+
+--------------------------------------------------
+Trial 18 - 2026-05-25 21:51:32
+Trial 18 Configuration:
+  learning_rate: 3.1362095414272514e-05
+  weight_decay: 0.0008573825043178673
+  adam_beta1: 0.8826897711620908
+  adam_beta2: 0.9889206892444629
+  warmup_steps: 381
+  train_batch: 9
+--------------------------------------------------
+
+Trial 18 Results:
+  F1: 0.3713
+  Precision: 0.3992
+  Recall: 0.3470
+
+--------------------------------------------------
+Trial 19 - 2026-05-25 22:02:15
+Trial 19 Configuration:
+  learning_rate: 1.717157357393133e-05
+  weight_decay: 0.00044110517829366316
+  adam_beta1: 0.950019006424605
+  adam_beta2: 0.9934375640300678
+  warmup_steps: 217
+  train_batch: 23
+--------------------------------------------------
+
+Trial 18 Results:
+  F1: 0.0000
+  Precision: 0.0000
+  Recall: 0.0000
+
+--------------------------------------------------
+Trial 19 - 2026-05-25 22:04:20
+Trial 19 Configuration:
+  learning_rate: 7.855110886049138e-06
+  weight_decay: 0.0004064114217409364
+  adam_beta1: 0.9520756903051354
+  adam_beta2: 0.9620702944699373
+  warmup_steps: 467
+  train_batch: 24
+--------------------------------------------------
+
+Trial 19 Results:
+  F1: 0.0000
+  Precision: 0.0000
+  Recall: 0.0000
+
+==================================================
+Optimization Completed at: 2026-05-25 22:06:30
+Best F1: 0.4474 (Trial 13)
+Best Configuration:
+  learning_rate: 5.3349574277861776e-05
+  weight_decay: 3.984762727065174e-05
+  adam_beta1: 0.9001336112168759
+  adam_beta2: 0.9897013161517257
+  warmup_steps: 54
+  train_batch: 9
+
+Trial 19 Results:
+  F1: 0.0000
+  Precision: 0.0000
+  Recall: 0.0000
+
+==================================================
+Optimization Completed at: 2026-05-25 22:07:48
+Best F1: 0.4474 (Trial 13)
+Best Configuration:
+  learning_rate: 5.3349574277861776e-05
+  weight_decay: 3.984762727065174e-05
+  adam_beta1: 0.9001336112168759
+  adam_beta2: 0.9897013161517257
+  warmup_steps: 54
+  train_batch: 9

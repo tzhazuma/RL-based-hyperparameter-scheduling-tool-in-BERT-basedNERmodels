@@ -1,0 +1,274 @@
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/conll03_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=123, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 14041
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 17560
+***** Entropy loss: 0.1522, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/conll03_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=123, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 14041
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 17560
+***** Entropy loss: 0.1522, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.1152, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.1201, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.3241, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0444, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1754, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.2362, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.2226, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0558, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0524, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.0807, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0345, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1359, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0655, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0979, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0461, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0795, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1246, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0378, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0033, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0160, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1315, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0523, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0408, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0888, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1153, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0358, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0158, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0855, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1498, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0638, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0322, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.3709, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0316, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0669, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0558, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0751, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0007, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0168, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0642, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0046, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0129, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0403, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0052, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0058, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1092, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0238, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0032, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.4383, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0343, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0532, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0030, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0344, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0656, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0005, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0320, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0030, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0483, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0868, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1288, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0020, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0378, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0014, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0092, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0229, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1483, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0007, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0406, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0066, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0088, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0090, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0406, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0003, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0035, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0029, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0867, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1039, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1039, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0060, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0119, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0013, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0008, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0056, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0134, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0003, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0055, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0017, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0043, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0086, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0350, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0047, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.2413, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0044, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0010, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0274, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0003, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0003, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0017, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0008, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0015, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0258, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0068, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0014, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Process rank: -1, device: cuda, n_gpu: 1, distributed training: False, 16-bits training: False
+Training/evaluation parameters Namespace(data_dir='/root/autodl-tmp/aclpaper/BOND/dataset/conll03_distant', model_type='roberta', model_name_or_path='roberta-base', output_dir='/root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123', config_name='', tokenizer_name='', cache_dir='/root/autodl-tmp/aclpaper/BOND/pretrained_model', max_seq_length=128, do_train=True, do_eval=True, do_predict=True, evaluate_during_training=True, do_lower_case=False, per_gpu_train_batch_size=8, per_gpu_eval_batch_size=8, gradient_accumulation_steps=1, learning_rate=5e-05, weight_decay=0.0, adam_epsilon=1e-08, adam_beta1=0.9, adam_beta2=0.999, max_grad_norm=1.0, num_train_epochs=10.0, max_steps=-1, warmup_steps=0, lr_scheduler='linear_warmup', logging_steps=100, save_steps=1000000, dataloader_num_workers=2, dataloader_pin_memory=True, eval_on_epoch_end_only=False, train_early_stopping_patience=0, train_early_stopping_min_delta=0.0, eval_all_checkpoints=False, no_cuda=False, overwrite_output_dir=True, overwrite_cache=False, seed=123, fp16=False, fp16_opt_level='O1', local_rank=-1, server_ip='', server_port='', mt=0, mt_updatefreq=1, mt_class='kl', mt_lambda=1, mt_rampup=300, mt_alpha1=0.99, mt_alpha2=0.995, mt_beta=10, mt_avg='exponential', mt_loss_type='logits', vat=0, vat_eps=0.001, vat_lambda=1, vat_beta=1, vat_loss_type='logits', load_weak=False, remove_labels_from_weak=False, rep_train_against_weak=1, n_gpu=1, device=device(type='cuda'))
+***** Running training *****
+  Num examples = 14041
+  Num Epochs = 10
+  Instantaneous batch size per GPU = 8
+  Total train batch size (w. parallel, distributed & accumulation) = 8
+  Gradient Accumulation steps = 1
+  Total optimization steps = 17560
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1522, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1152, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.1201, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.3241, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0444, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1754, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.2362, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.2226, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0558, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0524, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0474, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Saving optimizer and scheduler states to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123/checkpoint-best
+***** Entropy loss: 0.0807, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0345, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1359, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0655, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0979, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0461, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0795, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0072, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1246, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0378, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0033, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0160, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0092, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1315, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0523, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0484, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0680, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1229, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0004, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0395, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0104, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.1049, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0125, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0640, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0299, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0694, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.3426, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0217, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0258, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0005, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0462, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0576, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0131, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0378, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0093, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0209, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0019, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0197, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0016, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0020, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0002, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0923, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0593, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0023, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.5671, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0000, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0052, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0102, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0006, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0001, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+***** Entropy loss: 0.0707, mean teacher loss : 0.0000; vat loss: 0.0000 *****
+ global_step = 17560, average loss = 0.031757529528691875
+Saving model checkpoint to /root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123
+Evaluate the following checkpoints: ['/root/autodl-tmp/aclpaper/results/conll03/roberta-base/static/seed_123']
+***** Entropy loss: 0.0392, mean teacher loss : 0.0000; vat loss: 0.0000 *****

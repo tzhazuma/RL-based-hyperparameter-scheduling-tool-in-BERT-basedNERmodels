@@ -1,0 +1,201 @@
+TD3 NER Hyperparameter Optimization
+Started at: 2026-05-25 05:13:19
+Total trials: 20
+Model: bert (bert-base-cased)
+--------------------------------------------------
+
+
+--------------------------------------------------
+Trial 1 - 2026-05-25 05:13:19
+Trial 1 Configuration:
+  learning_rate: 3.1362095414272514e-05
+  weight_decay: 0.0008573825043178673
+  adam_beta1: 0.8826897711620908
+  adam_beta2: 0.9889206892444629
+  warmup_steps: 381
+  train_batch: 9
+--------------------------------------------------
+
+Trial 1 Results:
+  F1: 0.4533
+  ** New Best Configuration **
+
+--------------------------------------------------
+Trial 2 - 2026-05-25 05:14:48
+Trial 2 Configuration:
+  learning_rate: 1.717157357393133e-05
+  weight_decay: 0.00044110517829366316
+  adam_beta1: 0.950019006424605
+  adam_beta2: 0.9934375640300678
+  warmup_steps: 217
+  train_batch: 23
+--------------------------------------------------
+
+Trial 2 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 3 - 2026-05-25 05:15:38
+Trial 3 Configuration:
+  learning_rate: 9.400893749784064e-05
+  weight_decay: 1.6976319618666757e-05
+  adam_beta1: 0.8909346880927448
+  adam_beta2: 0.9729047302236287
+  warmup_steps: 184
+  train_batch: 12
+--------------------------------------------------
+
+Trial 3 Results:
+  F1: 0.4595
+  ** New Best Configuration **
+
+--------------------------------------------------
+Trial 4 - 2026-05-25 05:16:44
+Trial 4 Configuration:
+  learning_rate: 1.7913431120517766e-06
+  weight_decay: 2.3449182339843415e-05
+  adam_beta1: 0.8741878528830519
+  adam_beta2: 0.9755252398119509
+  warmup_steps: 452
+  train_batch: 25
+--------------------------------------------------
+
+Trial 4 Results:
+  F1: 0.0171
+
+--------------------------------------------------
+Trial 5 - 2026-05-25 05:17:36
+Trial 5 Configuration:
+  learning_rate: 2.6384879310514558e-05
+  weight_decay: 0.0007437559728369225
+  adam_beta1: 0.9101649655006333
+  adam_beta2: 0.9842183319783454
+  warmup_steps: 294
+  train_batch: 18
+--------------------------------------------------
+
+Trial 5 Results:
+  F1: 0.0424
+
+--------------------------------------------------
+Trial 6 - 2026-05-25 05:18:33
+Trial 6 Configuration:
+  learning_rate: 9.205361495883398e-06
+  weight_decay: 7.707525596259463e-05
+  adam_beta1: 0.9118819861585983
+  adam_beta2: 0.9748374581004093
+  warmup_steps: 321
+  train_batch: 22
+--------------------------------------------------
+
+Trial 6 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 7 - 2026-05-25 05:19:18
+Trial 7 Configuration:
+  learning_rate: 1.1180350533649588e-05
+  weight_decay: 9.992928490125822e-05
+  adam_beta1: 0.9040495803717743
+  adam_beta2: 0.9734903451191382
+  warmup_steps: 242
+  train_batch: 19
+--------------------------------------------------
+
+Trial 7 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 8 - 2026-05-25 05:20:11
+Trial 8 Configuration:
+  learning_rate: 7.994107626254888e-06
+  weight_decay: 9.283834175517109e-05
+  adam_beta1: 0.9030095871958168
+  adam_beta2: 0.9787890493993888
+  warmup_steps: 330
+  train_batch: 21
+--------------------------------------------------
+
+Trial 8 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 9 - 2026-05-25 05:21:03
+Trial 9 Configuration:
+  learning_rate: 1.280166326359474e-05
+  weight_decay: 0.00011857880348251151
+  adam_beta1: 0.9062222368127835
+  adam_beta2: 0.974120721842592
+  warmup_steps: 266
+  train_batch: 20
+--------------------------------------------------
+
+Trial 9 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 10 - 2026-05-25 05:21:51
+Trial 10 Configuration:
+  learning_rate: 1.3557923511271204e-05
+  weight_decay: 9.096008889785378e-05
+  adam_beta1: 0.9029668761794044
+  adam_beta2: 0.9732731705734741
+  warmup_steps: 289
+  train_batch: 22
+--------------------------------------------------
+
+Trial 10 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 11 - 2026-05-25 05:22:39
+Trial 11 Configuration:
+  learning_rate: 7.71863454897526e-06
+  weight_decay: 8.302721337864717e-05
+  adam_beta1: 0.9151107001135387
+  adam_beta2: 0.9705749166984552
+  warmup_steps: 316
+  train_batch: 19
+--------------------------------------------------
+
+Trial 11 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 12 - 2026-05-25 05:23:38
+Trial 12 Configuration:
+  learning_rate: 1.2281934565570516e-05
+  weight_decay: 9.085792135559922e-05
+  adam_beta1: 0.9106915480109088
+  adam_beta2: 0.971293613861876
+  warmup_steps: 291
+  train_batch: 20
+--------------------------------------------------
+
+Trial 12 Results:
+  F1: 0.0000
+
+--------------------------------------------------
+Trial 13 - 2026-05-25 05:24:37
+Trial 13 Configuration:
+  learning_rate: 1.3879237627316262e-05
+  weight_decay: 7.803587300038538e-05
+  adam_beta1: 0.9068590858393979
+  adam_beta2: 0.9734060482844924
+  warmup_steps: 295
+  train_batch: 22
+--------------------------------------------------
+
+Trial 13 Results:
+  F1: 0.0000
+
+==================================================
+Optimization Completed at: 2026-05-25 05:25:27
+Best F1: 0.4595 (Trial 3)
+Best Configuration:
+  learning_rate: 9.400893749784064e-05
+  weight_decay: 1.6976319618666757e-05
+  adam_beta1: 0.8909346880927448
+  adam_beta2: 0.9729047302236287
+  warmup_steps: 184
+  train_batch: 12

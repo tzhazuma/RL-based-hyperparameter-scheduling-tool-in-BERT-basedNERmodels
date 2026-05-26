@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "elapsed_seconds": 55.8,
+  "returncode": 0,
+  "command": "/root/miniconda3/bin/python /root/autodl-tmp/aclpaper/BOND/run_ner.py --data_dir /root/autodl-tmp/aclpaper/BOND/dataset/webpage_distant --model_type bert --model_name_or_path bert-base-cased --output_dir /root/autodl-tmp/aclpaper/results_2ep/webpage/bert-base-cased/cosine/seed_42 --num_train_epochs 10 --max_seq_length 128 --cache_dir /root/autodl-tmp/aclpaper/BOND/pretrained_model --seed 42 --do_train --do_eval --do_predict --evaluate_during_training --overwrite_output_dir --lr_scheduler cosine --logging_steps 100 --save_steps 1000000 --dataloader_num_workers 2 --gradient_accumulation_steps 1 --dataloader_pin_memory",
+  "expected_artifacts": [
+    "eval_results.txt",
+    "test_results.txt"
+  ],
+  "cleanup_removed": [
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/bert-base-cased/cosine/seed_42/checkpoint-best",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/bert-base-cased/cosine/seed_42/tfboard",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/bert-base-cased/cosine/seed_42/model.pt",
+    "/root/autodl-tmp/aclpaper/results_2ep/webpage/bert-base-cased/cosine/seed_42/training_args.bin"
+  ]
+}
