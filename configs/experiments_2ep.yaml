@@ -231,7 +231,7 @@ scheduler_configs:
       - "optimization_results.json"
       - "final_results.json"
     args:
-      n_trials: 20
+      n_trials: 10
       random_trials: 20
       verbose: true
     cleanup:
@@ -247,7 +247,7 @@ scheduler_configs:
     expected_artifacts:
       - "final_results.json"
     args:
-      n_trials: 20
+      n_trials: 10
     cleanup:
       enabled: true
       remove_dirs:
@@ -261,7 +261,7 @@ scheduler_configs:
     expected_artifacts:
       - "final_results.json"
     args:
-      n_trials: 20
+      n_trials: 10
       random_trials: 5
       actor_lr: 0.0003
       critic_lr: 0.0003
